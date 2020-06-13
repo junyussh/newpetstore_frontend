@@ -21,6 +21,7 @@ export const mutations = {
 export const actions = {
     async signin({commit}, credential) {
         return this.$axios.$post("/login", credential).then(res => {
+            console.log("print res")
             console.log(res)
             if(res.token) {
                 commit("setToken", res.token);

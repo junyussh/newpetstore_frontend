@@ -15,13 +15,17 @@
           </div>
           <div id="navbarMenuHeroB" class="navbar-menu">
             <div class="navbar-end">
+                <span class="navbar-item">
+                <a class="button is-primary is-inverted is-medium">
+                  Order Management
+                </a>
+              </span>
+
               <!-- <a class="navbar-item is-active">Sign Up</a> -->
-              <nuxt-link to="/signup" class="navbar-item is-active">Sign Up</nuxt-link><br>
-              <nuxt-link to="/home" class="navbar-item is-active">home</nuxt-link>
-              
+              <!-- <nuxt-link to="/signup" class="navbar-item is-active">Sign Up</nuxt-link> -->
               <span class="navbar-item">
                 <a class="button is-primary is-inverted is-medium">
-                  <nuxt-link to="/login">Home</nuxt-link>
+                  <nuxt-link to="/home">Home</nuxt-link>
                 </a>
               </span>
             </div>
@@ -29,12 +33,13 @@
         </div>
       </nav>
     </div>
-    <span
+    <!-- <span
       style="margin:0 auto;margin-top:7%; font: 700 100px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;"
-    >Loging Now</span>
+    >Loging Now</span> -->
     <div class="hero-body" style="width:40%; margin:0 auto; margin-top:-10%;">
       <div class="container">
-        <div class="field">
+
+        <!-- <div class="field">
           <p class="control has-icons-left has-icons-right">
             <input class="input" type="text" v-model="credentials.username" placeholder="Username" />
             <span class="icon is-small is-left">
@@ -44,8 +49,9 @@
               <i class="fas fa-check"></i>
             </span>
           </p>
-        </div>
-        <div class="field">
+        </div> -->
+
+        <!-- <div class="field">
           <p class="control has-icons-left">
             <input class="input" type="password" v-model="credentials.password" placeholder="Password" />
             <span class="icon is-small is-left">
@@ -53,17 +59,20 @@
             </span>
           </p>
         </div>
+
         <div class="field">
           <p class="control">
             <button class="button is-success" style="margin-left:43%;" @click="handleLoginButton">Login</button>
           </p>
         </div>
+
         <span
           style="margin:0 auto;margin-top:7%; font: 700 20px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;"
         >
           Don't have a account? Click here to
           <nuxt-link to="/log">Sign Up!</nuxt-link>
-        </span>
+        </span> -->
+
       </div>
     </div>
     <div class="hero-foot"></div>
@@ -101,15 +110,15 @@ export default {
     handleLoginButton() {
       console.log("print credenticals");
       console.log(this.credentials);
-      // this.success("Welcome back");
-      this.$store.dispatch("Login/signin", this.credentials);
-      this.signin(this.credentials).then(res => {
-        console.log("login success")
-        this.success("Welcome back");
-      }).catch(err => {
-        console.log("login error")
-        this.danger(err);
-      })
+      this.success("Welcome back");
+      // this.$store.dispatch("Login/signin", this.credentials);
+      // this.signin(this.credentials).then(res => {
+      //   console.log("login success")
+      //   this.success("Welcome back");
+      // }).catch(err => {
+      //   console.log("login error")
+      //   this.danger(err);
+      // })
     }
   }
 }
