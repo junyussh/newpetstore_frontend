@@ -54,18 +54,19 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data () {
     return {
       items: [
         {
           title: 'Home',
           icon: 'home',
-          to: { name: 'index' }
+          to: { path: '/dashboard/' }
         },
         {
           title: 'Inspire',
           icon: 'lightbulb',
-          to: { name: 'inspire' }
+          to: { path: '/dashboard/inspire' }
         }
       ]
     }

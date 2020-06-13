@@ -13,3 +13,8 @@
     </h3>
   </section>
 </template>
+<script>
+export default {
+  layout: "dashboard"
+}
+</script>
