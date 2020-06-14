@@ -80,9 +80,6 @@ export default {
       }
     };
   },
-  mounted() {
-    console.log(this.$store.state.Login.signed)
-  },
   methods: {
     ...mapActions({ signin: "Login/signin" }),
     success(message) {
@@ -102,12 +99,10 @@ export default {
                 })
     },
     handleLoginButton() {
-      // this.success("Welcome back");
+      console.log(this.credentials);
       this.$store.dispatch("Login/signin", this.credentials);
       this.signin(this.credentials).then(res => {
-        console.log(res)
-        this.success("Login success");
-        this.$router.push("/dashboard")
+        this.success("Welcome back");
       }).catch(err => {
         this.danger(err);
       })
