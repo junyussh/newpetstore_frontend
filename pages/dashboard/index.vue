@@ -36,19 +36,24 @@
       >
         No other internal dependency
       </card>
+
+      <Cart></Cart>
+      
     </div>
   </section>
 </template>
 
 <script>
-import Card from '~/components/Card'
+import Card from '~/components/Card';
+import Cart from '~/components/Cart';
 
 export default {
   name: 'HomePage',
   layout: "dashboard",
 
   components: {
-    Card
+    Card,
+    Cart
   }
 }
 </script>

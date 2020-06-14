@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-black is-large">
-    <div class="hero-head">
+    <!-- <div class="hero-head">
       <nav class="navbar">
         <div class="container">
           <div class="navbar-brand">
@@ -14,9 +14,9 @@
             </span>
           </div>
           <div id="navbarMenuHeroB" class="navbar-menu">
-            <div class="navbar-end">
+            <div class="navbar-end"> -->
               <!-- <a class="navbar-item is-active">Sign Up</a> -->
-              <nuxt-link to="/signup" class="navbar-item is-active">Sign Up</nuxt-link><br>
+              <!-- <nuxt-link to="/signup" class="navbar-item is-active">Sign Up</nuxt-link><br>
               <nuxt-link to="/home" class="navbar-item is-active">home</nuxt-link>
               
               <span class="navbar-item">
@@ -28,7 +28,7 @@
           </div>
         </div>
       </nav>
-    </div>
+    </div> -->
     <span
       style="margin:0 auto;margin-top:7%; font: 700 100px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;"
     >Loging Now</span>
@@ -103,6 +103,7 @@ export default {
       this.$store.dispatch("Login/signin", this.credentials);
       this.signin(this.credentials).then(res => {
         this.success("Welcome back");
+        this.$router.push("/dashboard")
       }).catch(err => {
         this.danger(err);
       })

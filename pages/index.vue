@@ -1,9 +1,9 @@
 <template>
   <section class="hero is-fullheight-with-navbar is-black">
     <div class="hero-head">
-      <nav class="navbar">
-        <div class="container">
-          <div class="navbar-brand">
+      <!-- <nav class="navbar">
+        <div class="container"> -->
+          <!-- <div class="navbar-brand">
             <a class="navbar-item">
               <img
                 src="https://cdn.jsdelivr.net/gh/vmlite/s/bulma/images/bulma-type-white.png"
@@ -15,25 +15,25 @@
               <span></span>
               <span></span>
             </span>
-          </div>
-          <div id="navbarMenuHeroA" class="navbar-menu">
-            <div class="navbar-end">
+          </div> -->
+          <!-- <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end"> -->
               <!-- <a class="navbar-item is-active">Home</a>
               <a class="navbar-item">Documentation</a>-->
-              <span class="navbar-item">
+              <!-- <span class="navbar-item">
                 <a class="button is-primary is-inverted is-medium">
                   <nuxt-link to="/login">Log In</nuxt-link>
                 </a>
-              </span>
-              <span class="navbar-item">
+              </span> -->
+              <!-- <span class="navbar-item">
                 <a class="button is-primary is-inverted is-medium">
                   <nuxt-link to="/signup">Sign Up</nuxt-link>
                 </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
+              </span> -->
+            <!-- </div>
+          </div> -->
+        <!-- </div>
+      </nav> -->
     </div>
     <div class="hero-body">
       <div class="container">
