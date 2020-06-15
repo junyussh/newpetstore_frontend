@@ -7,10 +7,74 @@
                     购物车
                 </p>
             </header>
-            <div class="card-content">
+            <!-- <div class="card-content">
                 <div class="content has-text-centered">
                     <b-table :data="data" :columns="columns"></b-table>
                 </div>
+            </div> -->
+            <div class="card-content">
+                <b-table :data="isEmpty ? [] : data">
+
+                    <template slot-scope="props">
+                        <b-table-column field="id" label="ID" width="40" numeric centered>
+                            {{ props.row.id }}
+                        </b-table-column>
+
+                        <b-table-column field="Item_id" label="Item_id" centered>
+                            {{ props.row.Item.id }}
+                        </b-table-column>
+
+                        <b-table-column field="商品名" label="商品名" centered>
+                            {{ props.row.Item.productId }}
+                        </b-table-column>
+
+                        <b-table-column field="供货商" label="供货商" centered>
+                            {{ props.row.Item.supplierId }}
+                        </b-table-column>
+
+                        <b-table-column field="商品单价" label="商品单价" centered>
+                            {{ props.row.Item.supplierId }}
+                        </b-table-column>
+
+                        <b-table-column field="Minus" label="Minus" centered>
+                            <b-button type="is-danger" icon-right="delete" size="is-small" @click="minus(props.id)" />
+                        </b-table-column>
+
+                        <b-table-column field="数量" label="数量" centered>
+                            {{ props.row.addAmount }}
+                        </b-table-column>
+
+                        <b-table-column field="Add" label="Add" centered>
+                            <b-button type="is-info" icon-right="delete" size="is-small" @click="add(props.id)" />
+                        </b-table-column>
+
+                        <b-table-column field="date" label="Date" centered>
+                            <span class="tag is-success">
+                                {{ new Date(props.row.date).toLocaleDateString() }}
+                            </span>
+                        </b-table-column>
+
+                        <!-- <b-table-column label="Gender">
+                            <span>
+                                <b-icon pack="fas" :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
+                                </b-icon>
+                                {{ props.row.addAmount }}
+                            </span>
+                        </b-table-column> -->
+                    </template>
+
+                    <template slot="empty">
+                        <section class="section">
+                            <div class="content has-text-grey has-text-centered">
+                                <p>
+                                    <b-icon icon="emoticon-sad" size="is-large">
+                                    </b-icon>
+                                </p>
+                                <p>Nothing here.</p>
+                            </div>
+                        </section>
+                    </template>
+                </b-table>
             </div>
             <footer class="card-footer">
                 <b-button type="is-success" @click="check">
@@ -74,44 +138,6 @@ export default {
                     "gender": "Female"
                 },
             ],
-            columns: [{
-                    field: 'id',
-                    label: 'ID',
-                    width: '40',
-                    numeric: true,
-                    sticky: true,
-                    headerClass: 'is-sticky-column-one',
-                    cellClass: "is-sticky-column-one"
-                },
-                {
-                    field: 'Item.id',
-                    label: 'Item_Id',
-                    centered: true,
-                    sticky: true,
-                    // headerClass: "is-sticky-column-two",
-                    // cellClass: "is-sticky-column-two"
-                },
-                {
-                    field: 'Item.productId',
-                    label: '商品种类'
-                },
-                {
-                    field: 'Item.supplierId',
-                    label: '供货商'
-                },
-                {
-                    field: 'Item.uniprice',
-                    label: '商品单价'
-                },
-                {
-                    field: 'addAmount',
-                    label: '购置数量'
-                },
-                // {
-                //     field: 'Item.uniprice'*'addAmount',
-                //     label: '商品金额'
-                // }
-            ],
         }
     },
     methods: {
@@ -132,22 +158,18 @@ export default {
                     } else {
                         this.$buefy.toast.open(`验证失败，请重新验证`)
                     }
-
                 }
             })
+        },
+        minus(id) {
+            console.log(id);
+            // console.log(this.data[id-1].get("addAmount"));
+            // this.data.indexOf(id-1).addAmount -= 1;
+        },
+        add(id) {
+            // console.log(this.data[id-1]["addAmount"]);
+            // this.data.indexOf(id-1).addAmount += 1;
         }
     }
 }
 </script>
-
-<style>
-.is-sticky-column-one {
-    background: #23d160 !important;
-    color: white !important;
-}
-
-/* .is-sticky-column-two {
-        background: #fffffff8 !important;
-        color: white !important;
-    } */
-</style>
