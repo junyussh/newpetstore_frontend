@@ -18,13 +18,13 @@
       <div class="column">
         <div class="columns is-mobile">
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard></ItemCard>
           </div>
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard></ItemCard>
           </div>
         </div>
       </div>
@@ -66,10 +66,10 @@
 
 
 <script>
-import chunyuCard from "@/components/chunyuCard";
+import ItemCard from "@/components/ItemCard";
 export default {
   components: {
-    chunyuCard
+    ItemCard
   },
   methods: {
     getImgUrl(value) {
