@@ -24,10 +24,10 @@
             <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
           <div class="column">
-            <ItemCard></ItemCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
           <div class="column">
-            <ItemCard></ItemCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
         </div>
       </div>
@@ -42,15 +42,15 @@
             <!-- <img src="..\static\mao1.gif" width="100%" height="80%"> -->
           </div>
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
         </div>
       </div>
     </div>
-    <div class="columns"> <span  style="font: 700 20px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;margin-left:10%; width:30%">The song of birds is the most beautiful sound of nature, so that the voice will always reverberate in our ears.</span> </div>
+    <div class="columns"> <span  style="margin-left:10%; width:30%">The song of birds is the most beautiful sound of nature, so that the voice will always reverberate in our ears.</span> </div>
     <div class="columns" style="width:50%; margin:auto">
       <div class="column">
         <div class="columns is-mobile">
@@ -61,7 +61,7 @@
             <div></div>
           </div>
           <div class="column">
-            <chunyuCard></chunyuCard>
+            <ItemCard title="測試商品" supplier="寵物商店" image="https://source.unsplash.com/WLUHO9A_xik/1600x900" />
           </div>
         </div>
       </div>
