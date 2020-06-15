@@ -3,11 +3,11 @@
   <div class="container">
     <div class="columns">
       <div class="column">
-        <section class="section">
+        <section class="section" style="padding: 1rem 1.5rem;">
           <div class="md-card">
             <div class="md-card-media">
               <div class="md-card-image">
-                <img src="https://source.unsplash.com/l1meQCttaqs/1280x960" alt="Placeholder image" />
+                <img src="https://source.unsplash.com/random" alt="Placeholder image" />
               </div>
               <div class="md-card-media-covered">
                 <div class="md-card-primary">
