@@ -4,7 +4,7 @@
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title has-text-grey">
-                    购物车
+                    Shopping Cart
                 </p>
             </header>
             <!-- <div class="card-content">
@@ -13,64 +13,50 @@
                 </div>
             </div> -->
             <div class="card-content">
-                <b-table :data="isEmpty ? [] : data">
+                <b-table :data="item">
 
                     <template slot-scope="props">
-                        <b-table-column field="id" label="ID" width="40" numeric centered>
-                            {{ props.row.id }}
+                        <b-table-column field="#" label="#" width="40" numeric centered>
+                            {{ props.index+1 }}
                         </b-table-column>
 
-                        <b-table-column field="Item_id" label="Item_id" centered>
-                            {{ props.row.Item.id }}
+                        <b-table-column field="Product" label="Product" centered>
+                            {{ props.row.productName }}
                         </b-table-column>
 
-                        <b-table-column field="商品名" label="商品名" centered>
-                            {{ props.row.Item.productId }}
+                        <b-table-column field="Attribute" label="Attribute" centered>
+                            {{ props.row.attribute }}
                         </b-table-column>
 
-                        <b-table-column field="供货商" label="供货商" centered>
-                            {{ props.row.Item.supplierId }}
+                        <b-table-column field="Supplier" label="Supplier" centered>
+                            {{ props.row.supplierName }}
                         </b-table-column>
 
-                        <b-table-column field="商品单价" label="商品单价" centered>
-                            {{ props.row.Item.supplierId }}
+                        <b-table-column field="Price" label="Price" centered>
+                            {{ props.row.price }}
                         </b-table-column>
 
                         <b-table-column field="Minus" label="Minus" centered>
-                            <b-button type="is-danger" icon-right="delete" size="is-small" @click="minus(props.id)" />
+                            <b-button type="is-danger" pack="fas" icon-right="minus" size="is-small" @click="minus(props.index)" />
                         </b-table-column>
 
-                        <b-table-column field="数量" label="数量" centered>
-                            {{ props.row.addAmount }}
+                        <b-table-column field="Amount" label="Amount" centered>
+                            {{ props.row.amount }}
                         </b-table-column>
 
                         <b-table-column field="Add" label="Add" centered>
-                            <b-button type="is-info" icon-right="delete" size="is-small" @click="add(props.id)" />
+                            <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @click="add(props.index)" />
                         </b-table-column>
-
-                        <b-table-column field="date" label="Date" centered>
-                            <span class="tag is-success">
-                                {{ new Date(props.row.date).toLocaleDateString() }}
-                            </span>
-                        </b-table-column>
-
-                        <!-- <b-table-column label="Gender">
-                            <span>
-                                <b-icon pack="fas" :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                                </b-icon>
-                                {{ props.row.addAmount }}
-                            </span>
-                        </b-table-column> -->
                     </template>
 
                     <template slot="empty">
                         <section class="section">
                             <div class="content has-text-grey has-text-centered">
                                 <p>
-                                    <b-icon icon="emoticon-sad" size="is-large">
+                                    <b-icon pack="fas" icon="shopping-cart" size="is-large">
                                     </b-icon>
                                 </p>
-                                <p>Nothing here.</p>
+                                <p>Empty Cart</p>
                             </div>
                         </section>
                     </template>
@@ -78,7 +64,7 @@
             </div>
             <footer class="card-footer">
                 <b-button type="is-success" @click="check">
-                    提交订单
+                    Checkout
                 </b-button>
             </footer>
         </div>
@@ -92,52 +78,17 @@
 export default {
     data() {
         return {
-            data: [{
-                    "id": 1,
-                    "Item": {
-                        "id": "3146313",
-                        "productId": "5312764",
-                        "supplierId": "87654",
-                        "uniprice": 50,
-                        "unicost": "",
-                        "quantity": "",
-                        "attribute": ""
-                    },
-                    "addAmount": 2,
-                    "date": "2016/10/15 13:43:27",
-                    "gender": "Male"
-                },
-                {
-                    "id": 2,
-                    "Item": {
-                        "id": "2345634",
-                        "productId": "323687",
-                        "supplierId": "456789",
-                        "uniprice": 20,
-                        "unicost": "",
-                        "quantity": "",
-                        "attribute": ""
-                    },
-                    "addAmount": 3,
-                    "date": "2016/12/15 06:00:53",
-                    "gender": "Male"
-                },
-                {
-                    "id": 3,
-                    "Item": {
-                        "id": "42756584",
-                        "productId": "42356753",
-                        "supplierId": "23145642",
-                        "uniprice": 15,
-                        "unicost": "",
-                        "quantity": "",
-                        "attribute": ""
-                    },
-                    "addAmount": 1,
-                    "date": "2016/04/26 06:26:28",
-                    "gender": "Female"
-                },
-            ],
+            item: [{
+                itemId: "3146313",
+                attribute: "黑的",
+                productId: "5312764",
+                productName: "神獸柚子",
+                stock: 3,
+                amount: 1,
+                price: 10000,
+                supplierName: "Test Shop",
+                supplierId: "15509524"
+            }]
         }
     },
     methods: {
@@ -161,14 +112,20 @@ export default {
                 }
             })
         },
-        minus(id) {
-            console.log(id);
-            // console.log(this.data[id-1].get("addAmount"));
-            // this.data.indexOf(id-1).addAmount -= 1;
+        minus(index) {
+            if (this.item[index].amount - 1 > 0) {
+                this.item[index].amount--;
+            }
         },
-        add(id) {
-            // console.log(this.data[id-1]["addAmount"]);
-            // this.data.indexOf(id-1).addAmount += 1;
+        add(index) {
+            if (this.item[index].amount + 1 <= this.item[index].stock) {
+                this.item[index].amount++;
+            } else {
+                this.$buefy.toast.open({
+                    message: 'Your can\'t add more than stock quantity!',
+                    type: 'is-danger'
+                })
+            }
         }
     }
 }

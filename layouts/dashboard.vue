@@ -31,14 +31,10 @@
 <script>
 import Navbar from "@/components/Navbar";
 export default {
+  middleware: 'auth',
   components: {
     Navbar
-  }
-};
-</script>
-<script>
-export default {
-  middleware: 'auth',
+  },
   data () {
     return {
       items: [
