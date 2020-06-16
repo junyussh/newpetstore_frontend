@@ -1,27 +1,25 @@
 export const state = () => ({
-    Product:[{}] 
+  Product: []
 })
 export const mutations = {
-    getAllProducts(state, product){
-        state.Product = product;
-        localStorage.setProduct("allproduct", product);
-    },
+  getAllProducts(state, product) {
+    state.Product = product;
+    // localStorage.set("allproduct", product);
+  },
 }
 export const actions = {
-        allproduct({ commit }) {
-        return this.$axios.$get("/products/all").then(res => {
-            console.log("print res")
-            console.log(res)
-            console.log(res[0].name)
-            if(res[0] != null){
-                commit("getAllProducts", res);
-            }
-            else {
-                return Promise.reject(res.message);
-            }
-            return Promise.resolve();
-        }).catch(e => {
-            return Promise.reject(e.response);
-        })
-    },
+  allproduct({
+    commit
+  }) {
+    return this.$axios.$get("/products/all").then(res => {
+      if (res[0] != null) {
+        commit("getAllProducts", res);
+        return Promise.resolve(res);
+      } else {
+        return Promise.reject(res);
+      }
+    }).catch(e => {
+      return Promise.reject(e);
+    })
+  },
 }

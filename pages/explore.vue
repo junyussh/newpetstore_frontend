@@ -136,15 +136,12 @@ export default {
     },
     async getAllProducts() {
       console.log("into getAllProducts");
-      Product = await this.$store.dispatch("Product/allproduct");
-      console.log('this is Product' + Product)
+      this.Product = await this.$store.dispatch("Product/allproduct");
+      // console.log('this is Product' + Product)
     }
   }
 };
 </script>
-
-
-
 
 <style>
 .is-active .al img {
