@@ -60,13 +60,14 @@
                 </div>
             </div>
         </div>
+        <button class="button is-success" style="margin-left:43%;" @click="getAllItems">Test</button>
 
         <div class="columns" style="width:70%; margin:auto;">
 
             <div class="column">
                 <div class="columns is-mobile">
-                    <div class="column" v-for="item in itemList" :key=item>
-                        <ItemCard v-bind:title=item.productId v-bind:supplier=item.attribute image="https://source.unsplash.com/WLUHO9A_xik/1600x900" ></ItemCard>
+                    <div class="column" v-for="item in Item" :key=item>
+                        <ItemCard v-bind:title=item.productId v-bind:supplier=item.attribute image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard>
                     </div>
 
                     <div class="column">
@@ -89,6 +90,11 @@
 <script>
 import ItemCard from "@/components/ItemCard";
 export default {
+    asyncData({
+        Item: [],
+    }) {
+        return getAllItems()
+    },
     data() {
         return {
             supplier: {
@@ -101,56 +107,7 @@ export default {
                 state: "China",
                 zip: "102200",
                 phone: "13501350135",
-            },
-            itemList: [{
-                id: "123",
-                productId: "狗",
-                supplierId: "789",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "白的",
-            }, {
-                id: "1234",
-                productId: "小狗",
-                supplierId: "9712",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "黑的",
-            }, {
-                id: "111",
-                productId: "猫",
-                supplierId: "4356",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "红的",
-            }, {
-                id: "312452",
-                productId: "大猫",
-                supplierId: "4326",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "黄的",
-            }, {
-                id: "3457",
-                productId: "公鸡",
-                supplierId: "5673",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "绿的",
-            }, {
-                id: "24567",
-                productId: "大狗",
-                supplierId: "2345",
-                unitprice: "",
-                unitcost: "",
-                quantity: "",
-                attribute: "紫的",
-            }, ],
+            }
         }
     },
     components: {
@@ -159,6 +116,13 @@ export default {
     methods: {
         getImgUrl(value) {
             return `https://picsum.photos/id/43${value}/1230/500`;
+        },
+        async getAllItems() {
+            // 调用Item.js中的allitem()方法来获取 Item/allitem
+            Item = await this.$store.dispatch("Item/allitem");
+            console.log(await this.$store.dispatch("Item/allitem"));
+            console.log(Item[0])
+            this.itemList = this.Item;
         }
     }
 };
