@@ -29,7 +29,7 @@
             </div>
             <div class="column">
               <ItemCard
-                :title="Product[0].id"
+                :title="Product[0].name"
                 supplier="寵物商店"
                 image="https://drive.google.com/drive/folders/1ZFzN08PUQC9P2SZywuJpcJDxiN7eex-H/gou.JPG"
               />
@@ -109,22 +109,35 @@
 import ItemCard from "@/components/ItemCard";
 export default {
   data() {
-        return {
-          loading: "false",
-          Product: [{ }]
+    return {
+      loading: "false",
+      Product: [
+        {
+          id: "",
+          supplierId: "",
+          categoryId: "",
+          name: "",
+          description: "",
+          image: ""
         }
-    },
+      ]
+    };
+  },
   components: {
     ItemCard
+  },
+  mounted: function() {
+    this.getAllProducts();
+    console.log(this.$data.Product)
   },
   methods: {
     getImgUrl(value) {
       return `https://picsum.photos/id/43${value}/1230/500`;
     },
     async getAllProducts() {
-       Product = await this.$store.dispatch("Product/allproduct");
-       console.log(await this.$store.dispatch("Product/allproduct"))
-       console.log(Product[0])
+      console.log("into getAllProducts");
+      Product = await this.$store.dispatch("Product/allproduct");
+      console.log('this is Product' + Product)
     }
   }
 };

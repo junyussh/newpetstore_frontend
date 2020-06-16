@@ -1,9 +1,9 @@
 export const state = () => ({
-    product: {}
+    Product:[{}] 
 })
 export const mutations = {
     getAllProducts(state, product){
-        state.product = product;
+        state.Product = product;
         localStorage.setProduct("allproduct", product);
     },
 }
@@ -12,6 +12,7 @@ export const actions = {
         return this.$axios.$get("/products/all").then(res => {
             console.log("print res")
             console.log(res)
+            console.log(res[0].name)
             if(res[0] != null){
                 commit("getAllProducts", res);
             }
