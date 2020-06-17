@@ -1,10 +1,10 @@
 export const state = () => ({
-    item: {}
+    Item: []
 })
 export const mutations = {
     getAllItems(state, item) {
-        state.item = item;
-        localStorage.setItem("allitem", item);
+        state.Item = item;
+        // localStorage.setItem("allitem", item);
     },
 }
 export const actions = {
@@ -14,12 +14,12 @@ export const actions = {
             console.log(res);
             if (res[0] != null) {
                 commit("getAllItems", res);
+                return Promise.resolve(res);
             } else {
-                return Promise.reject(res.message);
+                return Promise.reject(res);
             }
-            return Promise.resolve();
         }).catch(e => {
-            return Promise.reject(e.response);
+            return Promise.reject(e);
         })
     },
 }
