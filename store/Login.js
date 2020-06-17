@@ -11,8 +11,10 @@ export const mutations = {
         state.token = token;
         localStorage.setItem("token", token);
     },
+    setSigned(state, signed) {
+        state.signed = signed;
+    },
     setInfo(state, info) {
-        state.signed = true;
         state.info = info;
         // state.signed = true;
         // commit("setSigned", true);
@@ -29,10 +31,11 @@ export const actions = {
     //     commit("setInfo", info);
     // },
     async signin({ commit, dispatch }, credential) {
-        return this.$axios.$post("/login", credential).then(res => {
+        return this.$axios.$post("/login", credential).then(async function(res) {
             if(res.token) {
                 commit("setToken", res.token);
-                dispatch("setInfo", res.token);
+                commit("setSigned", true);
+                await dispatch("setInfo");
             }
             else {
                 return Promise.reject(res.message);
