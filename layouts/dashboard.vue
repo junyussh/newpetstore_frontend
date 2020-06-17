@@ -48,6 +48,11 @@ export default {
           title: 'Inspire',
           icon: 'lightbulb',
           to: { path: '/dashboard/inspire' }
+        },
+        {
+          title: 'Supplier',
+          icon: 'store',
+          to: { path: '/dashboard/supplier' }
         }
       ]
     }

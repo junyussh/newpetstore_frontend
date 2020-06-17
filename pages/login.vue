@@ -104,7 +104,7 @@ export default {
         this.success("Welcome back");
         this.$router.push("/dashboard")
       }).catch(err => {
-        this.danger(err);
+        this.danger(err.response.data.message);
       })
     }
   }
