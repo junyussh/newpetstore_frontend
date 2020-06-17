@@ -66,8 +66,8 @@
 
             <div class="column">
                 <div class="columns is-mobile">
-                    <div class="column" v-for="item in Item" :key=item>
-                        <ItemCard v-bind:title=item.productId v-bind:supplier=item.attribute image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard>
+                    <div class="column" v-for="item in itemList" :key=item>
+                        <ItemCard v-bind:title="item.productId" v-bind:supplier="item.attribute" image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard>
                     </div>
 
                     <div class="column">
@@ -90,11 +90,6 @@
 <script>
 import ItemCard from "@/components/ItemCard";
 export default {
-    asyncData({
-        Item: [],
-    }) {
-        return getAllItems()
-    },
     data() {
         return {
             supplier: {
@@ -113,16 +108,21 @@ export default {
     components: {
         ItemCard
     },
+    mounted: function () {
+        this.getAllItems();
+        console.log(this.$data.itemList)
+    },
     methods: {
         getImgUrl(value) {
             return `https://picsum.photos/id/43${value}/1230/500`;
         },
         async getAllItems() {
             // 调用Item.js中的allitem()方法来获取 Item/allitem
-            Item = await this.$store.dispatch("Item/allitem");
-            console.log(await this.$store.dispatch("Item/allitem"));
-            console.log(Item[0])
-            this.itemList = this.Item;
+            console.log("supplier get itemList");
+            this.itemList = await this.$store.dispatch("Item/allitem");
+            // console.log(await this.$store.dispatch("Item/allitem"));
+            // console.log(Item[0])
+            //  = this.Item;
         }
     }
 };
