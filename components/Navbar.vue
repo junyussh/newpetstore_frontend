@@ -15,13 +15,69 @@
 
     <template slot="end">
       <b-navbar-item tag="div">
-        <div class="buttons">
+        <div class="buttons" v-if="!$store.state.Login.signed">
           <nuxt-link to="/signup" class="button is-primary">
             <strong>Sign up</strong>
           </nuxt-link>
           <nuxt-link to="/login" class="button is-light">Log in</nuxt-link>
         </div>
+                <b-dropdown
+          v-else
+          v-model="navigation"
+          position="is-bottom-left"
+          append-to-body
+          aria-role="menu"
+        >
+          <a class="navbar-item" slot="trigger" role="button">
+            <b-icon pack="fas" icon="user"></b-icon>
+            <span>{{ info.firstName }}</span>
+            <b-icon pack="fas" icon="sort-down"></b-icon>
+          </a>
+
+          <b-dropdown-item custom aria-role="menuitem">
+            Logged as
+            <b>{{ info.username }}</b>
+          </b-dropdown-item>
+          <hr class="dropdown-divider" aria-role="menuitem" />
+          <b-dropdown-item value="dashboard" aria-role="menuitem">
+            <b-icon pack="fas" icon="tachometer-alt"></b-icon>Dashboard
+          </b-dropdown-item>
+          <b-dropdown-item value="orders" aria-role="menuitem">
+            <b-icon pack="fas" icon="ticket-alt"></b-icon>Orders
+          </b-dropdown-item>
+          <b-dropdown-item value="orders" aria-role="menuitem">
+            <b-icon pack="fas" icon="shopping-cart"></b-icon>Cart
+          </b-dropdown-item>
+          <hr class="dropdown-divider" aria-role="menuitem" />
+          <b-dropdown-item value="settings">
+            <b-icon pack="fas" icon="cogs"></b-icon>Settings
+          </b-dropdown-item>
+          <b-dropdown-item value="logout" aria-role="menuitem" @click="logoutHandler">
+            <b-icon pack="fas" icon="sign-out-alt"></b-icon>Logout
+          </b-dropdown-item>
+        </b-dropdown>
       </b-navbar-item>
     </template>
   </b-navbar>
 </template>
+<script>
+import { mapActions, mapState } from "vuex";
+export default {
+  computed: mapState({
+    info: state => state.Login.info,
+    signed: state => state.Login.signed
+  }),
+  methods: {
+    ...mapActions({
+      setInfo: "Login/setInfo",
+      setToken: "Login/setToken",
+      logout: "Login/logout"
+    }),
+    logoutHandler() {
+      console.log("logout")
+      this.logout();
+      this.$router.push("/login");
+    }
+  }
+}
+</script>
