@@ -6,7 +6,7 @@ export default function ({
   if (process.client) {
     const token = localStorage.getItem('token');
     if (!token) {
-        redirect('/login');
-    }
+      redirect('/login');
+    } 
   } else if (process.server) {}
 }

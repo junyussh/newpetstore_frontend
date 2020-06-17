@@ -4,7 +4,6 @@ export const state = () => ({
 export const mutations = {
   getAllProducts(state, product) {
     state.Product = product;
-    // localStorage.set("allproduct", product);
   },
 }
 export const actions = {
