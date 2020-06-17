@@ -6,11 +6,11 @@
                 <p class="subtitle">{{ city }} {{ city ? ", "+state : state}}</p>
             </div>
             <footer class="card-footer">
-                <p class="card-footer-item">
+                <nuxt-link :to="{ path: '/dashboard/supplier/'+id}" class="card-footer-item">
                     <span>
                         <b-icon pack="fas" icon="boxes" size="is-small"></b-icon>Manage
                     </span>
-                </p>
+                </nuxt-link>
                 <p class="card-footer-item">
                     <span>
                         <b-icon pack="fas" icon="edit" size="is-small"></b-icon>Edit
