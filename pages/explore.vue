@@ -24,22 +24,18 @@
               <ItemCard
                 title="藏獒"
                 supplier="寵物商店"
-                image="http://i1.bagong.cn/73/53/1469f9a368322a8d4745b6822be8_200x200_1.jpg"
+                image="https://gd.tw.workers.dev/IMG_0199(20200615-134550).JPG"
               />
             </div>
             <div class="column">
               <ItemCard
                 :title="Product[0].name"
-                supplier="寵物商店"
-                image="https://drive.google.com/drive/folders/1ZFzN08PUQC9P2SZywuJpcJDxiN7eex-H/gou.JPG"
+                :supplier="Product[0].supplierId"
+                image="http://i1.bagong.cn/73/53/1469f9a368322a8d4745b6822be8_200x200_1.jpg"
               />
             </div>
             <div class="column">
-              <ItemCard
-                title="測試商品"
-                supplier="寵物商店"
-                image="https://source.unsplash.com/WLUHO9A_xik/1600x900"
-              />
+              <ItemCard title="測試商品" supplier="寵物商店" image="https://gd.tw.workers.dev/gou.JPG" />
             </div>
           </div>
         </div>
@@ -82,7 +78,13 @@
         <div class="column">
           <div class="columns is-mobile">
             <div class="column">
-              <div></div>
+              <div>
+                <b-field label="Simple">
+                  <b-select placeholder="Select a name">
+                    <option v-for="category in Category" :key=category>{{ category.name }}</option>
+                  </b-select>
+                </b-field>
+              </div>
             </div>
             <div class="column">
               <div></div>
@@ -99,7 +101,6 @@
       </div>
       <br />
     </div>
-    <button class="button is-success" style="margin-left:43%;" @click="getAllProducts">Test</button>
   </section>
 </template>
 
@@ -110,7 +111,8 @@ import ItemCard from "@/components/ItemCard";
 export default {
   data() {
     return {
-      loading: "false",
+      addProductHidden: false,
+      userid: "",
       Product: [
         {
           id: "",
@@ -120,15 +122,26 @@ export default {
           description: "",
           image: ""
         }
-      ]
+      ],
+      Category: [
+        {
+          id: "",
+          name: "",
+          description: ""
+        }
+      ],
     };
   },
   components: {
     ItemCard
   },
   mounted: function() {
+    // var userinfo = localStorage.getItem('userinfo'),
+    this.userid = this.$store.state.Login.info,
+    console.log(this.$data.userid)
     this.getAllProducts();
-    console.log(this.$data.Product)
+    this.getAllCategory();
+    console.log(this.$data.Product);
   },
   methods: {
     getImgUrl(value) {
@@ -138,6 +151,12 @@ export default {
       console.log("into getAllProducts");
       this.Product = await this.$store.dispatch("Product/allproduct");
       // console.log('this is Product' + Product)
+    },
+    async getAllCategory() {
+      console.log("into getAllCategory");
+      this.Category = await this.$store.dispatch("Category/allcategory");
+    },
+    isHidden() {
     }
   }
 };

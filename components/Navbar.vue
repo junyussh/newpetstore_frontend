@@ -20,6 +20,7 @@
             <strong>Sign up</strong>
           </nuxt-link>
           <nuxt-link to="/login" class="button is-light">Log in</nuxt-link>
+          <nuxt-link to="/explore" class="button is-light">Explore</nuxt-link>
         </div>
       </b-navbar-item>
     </template>

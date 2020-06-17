@@ -37,6 +37,7 @@ export default {
   },
   data () {
     return {
+      userinfo: '',
       items: [
         {
           title: 'Home',
@@ -50,6 +51,11 @@ export default {
         }
       ]
     }
+  },
+  mounted: function() {
+    // var userinfo = localStorage.getItem('userinfo'),
+    this.userinfo = this.$store.state.Login.info,
+    console.log('test in dashboard ' + this.$data.userinfo)
   }
 }
 </script>
