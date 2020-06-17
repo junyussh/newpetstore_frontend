@@ -11,12 +11,9 @@ export const mutations = {
         state.token = token;
         localStorage.setItem("token", token);
     },
-    setInfo(state, token) {
-        this.$axios.$get("/user/me").then(res => {
-            state.userinfo = res;
-            console.log(res)
-          });
+    setInfo(state, info) {
         state.signed = true;
+        state.info = info;
         // state.signed = true;
         // commit("setSigned", true);
     }
@@ -31,11 +28,11 @@ export const actions = {
     //     console.log(info)
     //     commit("setInfo", info);
     // },
-    async signin({commit}, credential) {
+    async signin({ commit, dispatch }, credential) {
         return this.$axios.$post("/login", credential).then(res => {
             if(res.token) {
                 commit("setToken", res.token);
-                commit("setInfo", res.token);
+                dispatch("setInfo", res.token);
             }
             else {
                 return Promise.reject(res.message);
@@ -45,7 +42,14 @@ export const actions = {
             return Promise.reject(e.response.data.message);
         })
     },
-    test({ commit }) {
-        console.log("hello")
+    setInfo({ commit }) {
+        return this.$axios.$get("/users/me").then(res => {
+            if(res.id) {
+                commit("setInfo", res);
+            }
+        })
+    },
+    setToken({ commit }, token) {
+        commit("setToken", token);
     }
 }
