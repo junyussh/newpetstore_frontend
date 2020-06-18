@@ -17,6 +17,17 @@
       </div>
       <br />
       <br />
+      <!-- <div class="column" style="width:50%; margin:auto;">
+        <div class="columns is-mobile">
+          <div class="column" v-for="(count,index) in 3" :key="index">
+            <ItemCard
+              :title="Product[index].name"
+              :supplier="Product[index].supplierId"
+              :image="Product[index].image"
+            />
+          </div>
+        </div>
+      </div> -->
       <div class="columns" style="width:50%; margin:auto;">
         <div class="column">
           <div class="columns is-mobile">
@@ -72,55 +83,6 @@
         <span
           style="margin-left:10%; width:30%"
         >The song of birds is the most beautiful sound of nature, so that the voice will always reverberate in our ears.</span>
-      </div>
-
-      <div class="columns" style="width:50%; margin:auto">
-        <div class="column">
-          <div class="columns is-mobile">
-            <div class="column">
-              <div v-if="addProductHidden == false">
-                <b-field label="Supplier">
-                  <b-select placeholder="Select a shop" v-model="form.supplierId">
-                    <option
-                      :value="supplier.id"
-                      v-for="supplier in Supplier"
-                      :key="supplier"
-                    >{{ supplier.id }}--{{ supplier.name }}</option>
-                  </b-select>
-                </b-field>
-                <b-field label="Category">
-                  <b-select placeholder="Select a name" v-model="form.categoryId">
-                    <option
-                      :value="category.id"
-                      v-for="category in Category"
-                      :key="category"
-                    >{{ category.id }}--{{ category.name }}</option>
-                  </b-select>
-                </b-field>
-                <b-field label="Name">
-                  <b-input v-model="form.name" placeholder="Product name"></b-input>
-                </b-field>
-                <b-field label="Image URL">
-                  <b-input v-model="form.image" placeholder="Product Image"></b-input>
-                </b-field>
-                <b-field label="Description">
-                  <b-input v-model="form.description" maxlength="200" type="textarea"></b-input>
-                </b-field>
-                <b-button @click="addProduct" expanded rounded>Submit</b-button>
-              </div>
-            </div>
-            <div class="column">
-              <div></div>
-            </div>
-            <div class="column">
-              <ItemCard
-                title="測試商品"
-                supplier="寵物商店"
-                image="https://source.unsplash.com/WLUHO9A_xik/1600x900"
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <br />
     </div>
@@ -193,7 +155,7 @@ export default {
   },
   methods: {
     getImgUrl(value) {
-      return `https://picsum.photos/id/43${value}/1230/500`;
+      return `https://source.unsplash.com/1300x732/?animal?cute${value}`;
     },
     async getAllProducts() {
       console.log("into getAllProducts");
@@ -235,14 +197,14 @@ export default {
         .get("suppliers/all", {
           params: { userId: this.$store.state.Login.info.id }
         })
-        .then(function (res) {
+        .then(function(res) {
           console.log(res);
           _this.Supplier = res.data;
-          console.log(this.Supplier)
+          console.log(this.Supplier);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
-        })
+        });
     }
   }
 };
