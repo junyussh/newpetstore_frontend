@@ -28,28 +28,46 @@
                 <div class="container">
                     <h1 class="title">{{ this.supplier.name }}</h1>
                     <h2 class="subtitle">
-                        {{ supplier.city }} {{ supplier.city ? ", "+supplier.state : supplier.state}}
+                        {{ supplier.city }}
+                        {{
+                            supplier.city
+                                ? ", " + supplier.state
+                                : supplier.state
+                        }}
                         <br />
                         {{ products.length }} Products
                     </h2>
                 </div>
             </div>
         </section>
-        <div class="columns">
-            <div class="column">
-                <div class="columns">
-                    <!-- {{products[0].name}}
-                    {{products[0].description}}-->
-                    <ProductCard
-                        v-for="(product, index) in products"
-                        :key="index"
-                        :name="product.name"
-                        :description="product.description"
-                        :id="product.id"
-                    />
-                </div>
+        <div class="container">
+            <div v-if="products.length > 0" class="columns is-multiline">
+                <ProductCard
+                    v-for="(product, index) in products"
+                    :key="index"
+                    :name="product.name"
+                    :description="product.description"
+                    :id="product.id"
+                    :product="product"
+                    @reload="reloadProducts"
+                />
             </div>
-            <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+            <div
+                v-else
+                class="content has-text-grey has-text-centered"
+            >
+                <p>
+                    <b-icon pack="fas" icon="archive" size="is-large"></b-icon>
+                </p>
+                <p>
+                    You don't have any products in this supplier, click the
+                    button on left-top to add product.
+                </p>
+            </div>
+            <b-loading
+                :is-full-page="false"
+                :active.sync="isLoading"
+            ></b-loading>
         </div>
         <b-modal
             :active.sync="isComponentModalActive"
@@ -59,7 +77,10 @@
             aria-role="dialog"
             aria-modal
         >
-            <newProduct :supplier="supplier" @reload="reloadProducts"></newProduct>
+            <newProduct
+                :supplier="supplier"
+                @reload="reloadProducts"
+            ></newProduct>
         </b-modal>
     </section>
 </template>
@@ -114,7 +135,6 @@ export default {
     },
     methods: {
         async reloadProducts() {
-            console.log("reload")
             this.isLoading = true;
             this.products = await this.getProducts();
             this.isLoading = false;

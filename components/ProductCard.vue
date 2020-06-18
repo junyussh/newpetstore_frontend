@@ -13,12 +13,12 @@
                     <b-icon pack="fas" icon="boxes" size="is-small"></b-icon>Manage
                 </span>
             </nuxt-link>
-            <p class="card-footer-item">
+            <p class="card-footer-item" @click="isComponentModalActive = true">
                 <span>
                     <b-icon pack="fas" icon="edit" size="is-small"></b-icon>Edit
                 </span>
             </p>
-            <p class="card-footer-item" @click="deleteProduct">
+            <p class="card-footer-item" @click="deleteProductDialog">
                 <span>
                     <a class="is-danger">
                         <b-icon pack="fas" icon="trash-alt" size="is-small"></b-icon>Delete
@@ -27,22 +27,62 @@
             </p>
         </footer>
     </div>
+    <b-modal
+            :active.sync="isComponentModalActive"
+            has-modal-card
+            trap-focus
+            :destroy-on-hide="false"
+            aria-role="dialog"
+            aria-modal
+        >
+            <editProduct @reload="reloadProduct" :newForm="product"></editProduct>
+        </b-modal>
 </div>
 </template>
 
 <script>
+import editProduct from '@/components/form/editProduct';
 export default {
-    props: ["name", "description", "id"],
+    props: ["name", "description", "id", "product"],
+    components: {
+        editProduct
+    },
+    data() {
+        return {
+            isComponentModalActive: false
+        }
+    },
     methods: {
-        deleteProduct() {
+        deleteProductDialog() {
             this.$buefy.dialog.confirm({
                 title: "Deleting supplier",
                 message: "Are you sure you want to <b>delete</b> your supplier? This action cannot be undone and all items will be deleted too.",
                 confirmText: "Delete Product",
                 type: "is-danger",
                 hasIcon: true,
-                onConfirm: () => this.$buefy.toast.open("Account deleted!")
+                onConfirm: () => this.deleteProduct()
             });
+        },
+        deleteProduct() {
+            let _this = this;
+            this.$axios.$delete("/products/"+this.id).then(res => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Product "+this.name+" deleted!",
+                        type: "is-success"
+                    });
+                _this.reloadProduct();
+            }).catch(e => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Something got error!",
+                        type: "is-danger"
+                    });
+            })
+        },
+        reloadProduct() {
+            this.isComponentModalActive = false;
+            this.$emit("reload")
         }
     }
 };

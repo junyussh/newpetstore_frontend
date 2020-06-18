@@ -2,7 +2,7 @@
     <form action @submit.prevent>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">New product</p>
+                <p class="modal-card-title">Edit product</p>
             </header>
             <section class="modal-card-body">
                 <b-field label="Category">
@@ -41,10 +41,10 @@
                 </b-field>
             </section>
             <footer class="modal-card-foot" style="justify-content: flex-end;">
-                <button class="button" type="button" @click="$parent.close()">
+                <button class="button" type="button" @click="close">
                     Cancel
                 </button>
-                <button class="button is-primary" @click="addProduct">
+                <button class="button is-primary" @click="save">
                     Add
                 </button>
             </footer>
@@ -54,30 +54,20 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-    props: ["supplier"],
+    props: ["newForm"],
     data() {
         return {
-            Category: [
-                {
-                    id: "",
-                    name: "",
-                    description: ""
-                }
-            ],
-            form: {
-                supplierId: "",
-                categoryId: "",
-                name: "",
-                description: "",
-                image: ""
-            }
+            Category: [],
+            form: {}
         };
     },
     computed: mapState({
         userid: state => state.Login.info.id
     }),
+    beforeMount() {
+        this.form = Object.assign({}, this.newForm);
+    },
     async mounted() {
-        console.log(this.supplier)
         this.Category = await this.getAllCategory();
     },
     methods: {
@@ -89,15 +79,14 @@ export default {
                 this.form[key] = "";
             });
         },
-        addProduct() {
-            this.form.supplierId = this.supplier.id;
+        save() {
             this.$axios
-                .$post("/products/", this.form)
+                .$put("/products/"+this.form.id, this.form)
                 .then(res => {
                     if (res.id) {
                         // this.clearForm();
                         this.$buefy.toast.open({
-                            message: "Product created successfully!",
+                            message: "Product updated successfully!",
                             type: "is-success"
                         });
                         this.$emit("reload")
@@ -109,6 +98,10 @@ export default {
                         type: "is-danger"
                     });
                 });
+        },
+        close() {
+            this.form = Object.assign({}, this.newForm);
+            this.$parent.close()
         }
     }
 };
