@@ -3,7 +3,9 @@
     <div class="card">
         <div class="card-content">
             <p class="title">{{ name }}</p>
-            <p class="subtitle">{{ description }} {{ description ? ", "+supplier : supplier}}</p>
+            <p class="subtitle">{{ description }}
+                <br> {{ id }}
+            </p>
         </div>
         <footer class="card-footer">
             <nuxt-link :to="{ path: '/dashboard/product/'+id}" class="card-footer-item">
@@ -30,7 +32,7 @@
 
 <script>
 export default {
-    props: ["name", "description", "supplier", "id"],
+    props: ["name", "description", "id"],
     methods: {
         deleteProduct() {
             this.$buefy.dialog.confirm({

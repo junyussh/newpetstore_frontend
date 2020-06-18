@@ -54,7 +54,7 @@ export default {
             this.$buefy.dialog.confirm({
                 title: "Deleting supplier",
                 message:
-                    "Are you sure you want to <b>delete</b> your supplier? This action cannot be undone and all items will be deleted too.",
+                    "Are you sure you want to <b>delete</b> your supplier? This action cannot be undo and all items will be deleted too.",
                 confirmText: "Delete Supplier",
                 type: "is-danger",
                 hasIcon: true,

@@ -17,17 +17,18 @@
       </div>
       <br />
       <br />
-      <!-- <div class="column" style="width:50%; margin:auto;">
-        <div class="columns is-mobile">
-          <div class="column" v-for="(count,index) in 3" :key="index">
+      <div class="column" style="width:50%; margin:auto;">
+        <!-- <div class="columns is-mobile">
+          <div class="column" v-for="(index) in 2" :key="index">
             <ItemCard
               :title="Product[index].name"
               :supplier="Product[index].supplierId"
               :image="Product[index].image"
             />
+            <p>{{Product[index].name}}</p>
           </div>
-        </div>
-      </div> -->
+        </div> -->
+      </div>
       <div class="columns" style="width:50%; margin:auto;">
         <div class="column">
           <div class="columns is-mobile">
@@ -142,24 +143,25 @@ export default {
   components: {
     ItemCard
   },
-  mounted: function() {
+  mounted: async function() {
     (this.userid = this.$store.state.Login.info.id),
       (this.userrole = this.$store.state.Login.info.role),
       console.log(this.$data.userrole);
     // this.form.supplierId = this.$store.state.Login.info.id;
-    this.getAllProducts();
+    console.log("products")
+    this.Product = await this.getAllProducts();
+    console.log(this.Product);
     this.getAllCategory();
     this.getAllSupplier();
     this.isHidden();
-    console.log(this.$data.Product);
   },
   methods: {
     getImgUrl(value) {
       return `https://source.unsplash.com/1300x732/?animal?cute${value}`;
     },
-    async getAllProducts() {
+    getAllProducts() {
       console.log("into getAllProducts");
-      this.Product = await this.$store.dispatch("Product/allproduct");
+      return this.$store.dispatch("Product/allproduct");
       // console.log('this is Product' + Product)
     },
     async getAllCategory() {

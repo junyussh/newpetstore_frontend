@@ -8,12 +8,6 @@
                         <span>New Supplier</span>
                     </button>
                 </b-navbar-item>
-                <b-navbar-item tag="div">
-                    <button class="button is-primary" @click="newProductModal">
-                        <b-icon pack="fas" icon="plus"></b-icon>
-                        <span>New Product</span>
-                    </button>
-                </b-navbar-item>
             </template>
         </b-navbar>
         <div class="container">
