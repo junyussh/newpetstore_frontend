@@ -3,20 +3,16 @@
     <section class="hero">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">{{ this.product }}</h1>
-                <h2 class="subtitle">{{ product.description }} {{ product.description ? ", "+product.id : product.id}}</h2>
+                {{item.productId}}
+                {{item.quantity}}
+                <!-- <h1 class="title">{{ this.product }}</h1>
+                <h2 class="subtitle">{{ product.description }} {{ product.description ? ", "+product.id : product.id}}</h2> -->
             </div>
         </div>
     </section>
     <div class="columns">
         <div class="column">
-            <div class="columns">
-                <!-- <div class="column" v-for="item in items" :key=item>
-                    <ItemCard v-bind:title="item.productId" v-bind:supplier="item.attribute" image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard>
-                </div> -->
-
-                <SellerItemCard v-for="(item, index) in items" :key="index" :id="item.id" :attribute="product.attribute" :productId="product.productId" :supplierId="product.supplierId" />
-            </div>
+            <div class="columns"></div>
         </div>
         <div class="column"></div>
     </div>
@@ -29,14 +25,11 @@ import SellerItemCard from "@/components/SellerItemCard";
 export default {
     layout: "dashboard",
     components: {
-        ItemCard,
-        SellerItemCard
+
     },
     data() {
         return {
-            product: {},
-            error: null,
-            items: []
+            item: {}
         };
     },
     async mounted() {
@@ -46,16 +39,16 @@ export default {
                 type: "is-danger"
             });
         } else {
-            this.items = await this.$axios.$get("/items/all", {
-                params: {
-                    productId: this.$route.params.id
+            this.item = await this.$axios.$get("/items/", {
+                param: {
+                    itemId: this.$route.params.id
                 }
             });
 
         }
-        this.items = await this.$axios.$get("/items/all", {
+        this.item = await this.$axios.$get("/items/", {
             params: {
-                productId: this.$route.params.id
+                itemId: this.$route.params.id
             }
         });
     },

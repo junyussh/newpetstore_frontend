@@ -2,7 +2,7 @@
     <form action @submit.prevent>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">New supplier</p>
+                <p class="modal-card-title">Edit supplier</p>
             </header>
             <section class="modal-card-body">
                 <b-field
@@ -56,27 +56,22 @@
                 </b-field>
             </section>
             <footer class="modal-card-foot" style="justify-content: flex-end;">
-                <button class="button" type="button" @click="$parent.close()">Cancel</button>
-                <button class="button is-primary" @click="create">Create</button>
+                <button class="button" type="button" @click="close">Cancel</button>
+                <button class="button is-primary" @click="save">Save</button>
             </footer>
         </div>
     </form>
 </template>
 <script>
 export default {
+    props: ["newForm"],
     data() {
         return {
-            form: {
-                address1: "",
-                address2: "",
-                city: "",
-                name: "Test shop",
-                phone: "",
-                state: "",
-                userid: "",
-                zip: ""
-            }
+            form: {}
         }
+    },
+    beforeMount() {
+        this.form = Object.assign({}, this.newForm);
     },
     methods: {
         clearForm() {
@@ -84,16 +79,16 @@ export default {
                 this.form[key] = "";
             });
         },
-        create() {
+        save() {
             this.form.userid = this.$store.state.Login.info.id;
             
-            this.$axios.$post("/suppliers/", this.form).then(res => {
+            this.$axios.$put("/suppliers/"+this.form.id, this.form).then(res => {
                 this.$buefy.toast.open({
-                    message: 'Supplier created successfully!',
+                    message: 'Supplier updated successfully!',
                     type: 'is-success'
                 })
                 this.$emit("reload")
-                // this.clearForm();
+                this.clearForm();
             }).catch(e => {
                 this.$buefy.toast.open({
                     message: "something get errors",
@@ -101,6 +96,10 @@ export default {
                 })
             })
             
+        },
+        close() {
+            this.form = Object.assign({}, this.newForm);
+            this.$parent.close();
         }
     }
 }

@@ -23,7 +23,7 @@
                 </p>
                 <p>You are not a seller now, click the button on left-top to create a supplier.</p>
             </div>
-            <div class="columns" v-else>
+            <div class="columns is-multiline" v-else>
                 <SupplierCard
                     v-for="(supplier, index) in suppliers"
                     :key="index"
@@ -31,8 +31,11 @@
                     :city="supplier.city"
                     :state="supplier.state"
                     :id="supplier.id"
+                    :form="supplier"
+                    @reload="reloadSuppliers"
                 />
             </div>
+            <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
         </div>
         <b-modal
             :active.sync="isComponentModalActive"
@@ -58,6 +61,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             isComponentModalActive: false,
             isProductComponentModalActive: false,
             suppliers: []
@@ -79,16 +83,19 @@ export default {
         newProductModal() {
             this.$router.push("/addproduct");
         },
-        reloadSuppliers() {
-            this.getSuppliers();
+        async reloadSuppliers() {
+            this.isLoading = true;
+            await this.getSuppliers();
+            this.isLoading = false;
             this.isComponentModalActive = false;
         },
         getSuppliers() {
             let _this = this;
-            this.$axios
+            return this.$axios
                 .$get("/suppliers/")
                 .then(res => {
                     _this.suppliers = res;
+                    console.log(res)
                 })
                 .catch(e => {
                     this.$buefy.toast.open({
