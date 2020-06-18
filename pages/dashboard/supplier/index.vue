@@ -8,6 +8,12 @@
                         <span>New Supplier</span>
                     </button>
                 </b-navbar-item>
+                <b-navbar-item tag="div">
+                    <button class="button is-primary" @click="newProductModal">
+                        <b-icon pack="fas" icon="plus"></b-icon>
+                        <span>New Product</span>
+                    </button>
+                </b-navbar-item>
             </template>
         </b-navbar>
         <div class="container">
@@ -53,6 +59,7 @@ export default {
     data() {
         return {
             isComponentModalActive: false,
+            isProductComponentModalActive: false,
             suppliers: []
         };
     },
@@ -68,6 +75,9 @@ export default {
         newSupplierModal() {
             this.isComponentModalActive = true;
             //   return this.$axios.$post("/supplier", this.form);
+        },
+        newProductModal() {
+            this.$router.push("/addproduct");
         },
         reloadSuppliers() {
             this.getSuppliers();

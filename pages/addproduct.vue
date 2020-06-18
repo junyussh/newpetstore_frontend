@@ -1,10 +1,8 @@
 <template>
-  <form action @submit.prevent>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">New supplier</p>
-      </header>
-      <section class="modal-card-body">
+  <section class="hero is-green">
+    <h1 class="title" style="margin:auto">Add Product</h1>
+    <div style="width:45%; margin:auto">
+      <div v-if="addProductHidden == false">
         <b-field label="Supplier">
           <b-select placeholder="Select a shop" v-model="form.supplierId">
             <option
@@ -32,22 +30,32 @@
         <b-field label="Description">
           <b-input v-model="form.description" maxlength="200" type="textarea"></b-input>
         </b-field>
-        <b-button @click="addProduct" expanded rounded>Submit</b-button>
-      </section>
-      <footer class="modal-card-foot" style="justify-content: flex-end;">
-        <button class="button" type="button" @click="$parent.close()">Cancel</button>
-        <button class="button is-primary" @click="create">Create</button>
-      </footer>
+        <b-button style="width:20%; margin:auto" class="is-success" @click="addProduct" expanded rounded>Submit</b-button>
+      </div>
     </div>
-  </form>
+  </section>
 </template>
+
+
+
 <script>
+import ItemCard from "@/components/ItemCard";
 export default {
   data() {
     return {
       addProductHidden: false,
       userrole: "",
       userid: "",
+      Product: [
+        {
+          id: "",
+          supplierId: "",
+          categoryId: "",
+          name: "",
+          description: "",
+          image: ""
+        }
+      ],
       Category: [
         {
           id: "",
@@ -78,6 +86,9 @@ export default {
       ]
     };
   },
+  components: {
+    ItemCard
+  },
   mounted: function() {
     (this.userid = this.$store.state.Login.info.id),
       (this.userrole = this.$store.state.Login.info.role),
@@ -95,12 +106,12 @@ export default {
     },
     async getAllProducts() {
       console.log("into getAllProducts");
-      this.Product = await this.$store.dispatch(".../Product/allproduct");
+      this.Product = await this.$store.dispatch("Product/allproduct");
       // console.log('this is Product' + Product)
     },
     async getAllCategory() {
       console.log("into getAllCategory");
-      this.Category = await this.$store.dispatch(".../Category/allcategory");
+      this.Category = await this.$store.dispatch("Category/allcategory");
     },
     async isHidden() {
       if (this.userrole == "SELLER") this.addProductHidden = false;
@@ -111,14 +122,20 @@ export default {
       });
     },
     addProduct() {
+      let _this = this;
       console.log(this.form);
       this.$axios
         .$post("/products/", this.form)
         .then(res => {
-          if (res.id) {
+          if (res) {
             this.clearForm();
-            this.success("Add Successful! redirecting to explore page");
-            this.$router.push("/explore");
+            _this.$buefy.toast.open({
+                    duration: 3000,
+                    message: "Add Successful!",
+                    position: 'is-bottom',
+                    type: 'is-success'
+                })
+            _this.$router.push("/dashboard/supplier");
           }
         })
         .catch(e => {
@@ -133,15 +150,24 @@ export default {
         .get("suppliers/all", {
           params: { userId: this.$store.state.Login.info.id }
         })
-        .then(function (res) {
+        .then(function(res) {
           console.log(res);
           _this.Supplier = res.data;
-          console.log(this.Supplier)
+          console.log(this.Supplier);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
-        })
+        });
     }
   }
 };
 </script>
+
+<style>
+.is-active .al img {
+  filter: grayscale(0%);
+}
+.al img {
+  filter: grayscale(100%);
+}
+</style>
