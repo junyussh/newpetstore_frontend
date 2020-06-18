@@ -1,6 +1,12 @@
 <template>
   <section class="hero is-green">
     <h1 class="title" style="margin:auto">Add Product</h1>
+    <div v-if="addProductHidden == true" class="content has-text-grey has-text-centered">
+      <p>
+        <b-icon pack="fas" icon="archive" size="is-large"></b-icon>
+      </p>
+      <p>You are not a seller now, click <nuxt-link to="/explore"> here </nuxt-link>to Jump.</p>
+    </div>
     <div style="width:45%; margin:auto">
       <div v-if="addProductHidden == false">
         <b-field label="Supplier">
@@ -30,7 +36,13 @@
         <b-field label="Description">
           <b-input v-model="form.description" maxlength="200" type="textarea"></b-input>
         </b-field>
-        <b-button style="width:20%; margin:auto" class="is-success" @click="addProduct" expanded rounded>Submit</b-button>
+        <b-button
+          style="width:20%; margin:auto"
+          class="is-success"
+          @click="addProduct"
+          expanded
+          rounded
+        >Submit</b-button>
       </div>
     </div>
   </section>
@@ -43,7 +55,7 @@ import ItemCard from "@/components/ItemCard";
 export default {
   data() {
     return {
-      addProductHidden: false,
+      addProductHidden: true,
       userrole: "",
       userid: "",
       Product: [
@@ -130,11 +142,11 @@ export default {
           if (res) {
             this.clearForm();
             _this.$buefy.toast.open({
-                    duration: 3000,
-                    message: "Add Successful!",
-                    position: 'is-bottom',
-                    type: 'is-success'
-                })
+              duration: 3000,
+              message: "Add Successful!",
+              position: "is-bottom",
+              type: "is-success"
+            });
             _this.$router.push("/dashboard/supplier");
           }
         })
