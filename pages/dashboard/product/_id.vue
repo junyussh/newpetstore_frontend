@@ -2,34 +2,37 @@
 <section class="section">
     <section class="hero">
         <div class="hero-body">
-            <div class="container">
-                <h1 class="title">{{ this.supplier.name }}</h1>
-                <h2 class="subtitle">{{ supplier.city }} {{ supplier.city ? ", "+supplier.state : supplier.state}}</h2>
-            </div>
+            ItemList
+            <!-- <div class="container">
+                <h1 class="title">{{ this.Product.name }}</h1>
+                <h2 class="subtitle">{{ Product.city }} {{ Product.city ? ", "+Product.state : Product.state}}</h2>
+            </div> -->
         </div>
     </section>
     <div class="columns">
         <div class="column">
             <div class="columns">
+                item
                 <!-- {{products[0].name}}
                 {{products[0].description}} -->
-                <ProductCard v-for="(product, index) in products"
+                <!-- <ProductCard v-for="(product, index) in products"
                     :key="index"
                     :name="product.name"
                     :description="product.description"
-                    :supplier="product.supplierId"
+                    :Product="product.ProductId"
                     :id="product.id"
-                />
-                <!-- <SupplierCard
+                /> -->
+                <!-- <ProductCard
                     :key="index"
                     :name="product.name"
                     :city="product.description"
                     :id="product.id"
                 /> -->
-                <!-- <ItemCard v-bind:title="product.name" v-bind:supplier="product.description" image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard> -->
+                <!-- <ItemCard v-bind:title="product.name" v-bind:Product="product.description" image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard> -->
             </div>
-            <button @click="ontest">test</button>
+            
         </div>
+        <div class="column"></div>
     </div>
 </section>
 </template>
@@ -43,26 +46,27 @@ export default {
     },
     data() {
         return {
-            supplier: {},
+            product: {},
             error: null,
-            products: []
+            items: []
         };
     },
     async mounted() {
-        if (this.error) {
-            this.$buefy.toast.open({
-                message: "something get errors",
-                type: "is-danger"
-            });
-        } else {
-            this.products = await this.$axios.$get("/products/all", {
-                params: {
-                    supplier: this.$route.params.id
-                }
-            });
-            console.log("already complete");
-            console.log(this.products)
-        }
+        // if (this.error) {
+        //     this.$buefy.toast.open({
+        //         message: "something get errors",
+        //         type: "is-danger"
+        //     });
+        // } else {
+        //     this.items = await this.$axios.$get("/items/all", {
+        //         params: {
+        //             product: this.$route.params.id
+        //         }
+        //     });
+        //     console.log("already complete");
+        //     console.log(this.items)
+        // }
+        // console.log("output");
     },
     async asyncData({
         route,
@@ -71,11 +75,11 @@ export default {
     }) {
         console.log(route.params.id);
         return $axios
-            .$get("/suppliers/" + route.params.id)
+            .$get("/items/" + route.params.id)
             .then(res => {
                 console.log(res);
                 return {
-                    supplier: res
+                    product: res
                 };
             })
             .catch(e => {
@@ -87,7 +91,7 @@ export default {
     },
     methods: {
         ontest(){
-            console.log(this.products)
+            console.log(this.items)
         }
     }
 };

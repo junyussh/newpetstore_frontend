@@ -39,6 +39,8 @@
 
       <Cart></Cart>
       
+      <button @click="ontest">test</button>
+      
     </div>
   </section>
 </template>
@@ -54,6 +56,12 @@ export default {
   components: {
     Card,
     Cart
+  },
+  methods: {
+    ontest() {
+      console.log("is testing");
+      console.log(this.$store.state.Login.info);
+    }
   }
 }
 </script>
