@@ -11,7 +11,7 @@
                         <b-icon pack="fas" icon="boxes" size="is-small"></b-icon>Manage
                     </span>
                 </nuxt-link>
-                <p class="card-footer-item">
+                <p class="card-footer-item" @click="editSupplier">
                     <span>
                         <b-icon pack="fas" icon="edit" size="is-small"></b-icon>Edit
                     </span>
@@ -25,11 +25,30 @@
                 </p>
             </footer>
         </div>
+        <b-modal
+            :active.sync="isComponentModalActive"
+            has-modal-card
+            trap-focus
+            :destroy-on-hide="false"
+            aria-role="dialog"
+            aria-modal
+        >
+            <editSupplier @reload="reloadSupplier" :newForm="form"></editSupplier>
+        </b-modal>
     </div>
 </template>
 <script>
+import editSupplier from '@/components/form/editSupplier';
 export default {
-    props: ["name", "city", "state", "id"],
+    data() {
+        return {
+            isComponentModalActive: false
+        }
+    },
+    components: {
+        editSupplier
+    },
+    props: ["name", "city", "state", "id", "form"],
     methods: {
         deleteSupplier() {
             this.$buefy.dialog.confirm({
@@ -41,6 +60,13 @@ export default {
                 hasIcon: true,
                 onConfirm: () => this.$buefy.toast.open("Account deleted!")
             });
+        },
+        editSupplier() {
+            this.isComponentModalActive = true;
+        },
+        reloadSupplier() {
+            this.isComponentModalActive = false;
+            this.$emit("reload")
         }
     }
 };

@@ -111,12 +111,11 @@ export default {
       });
     },
     addProduct() {
-      console.log(this.form);
       this.$axios
         .$post("/products/", this.form)
         .then(res => {
           if (res.id) {
-            this.clearForm();
+            // this.clearForm();
             this.success("Add Successful! redirecting to explore page");
             this.$router.push("/explore");
           }
