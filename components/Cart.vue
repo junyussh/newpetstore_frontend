@@ -45,7 +45,8 @@
                         </b-table-column>
 
                         <b-table-column field="Add" label="Add" centered>
-                            <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @click="add(props.index)" />
+                            <!-- <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @click="add(props.index)" /> -->
+                            <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @change="handleChange($event,index,item.productID)" />
                         </b-table-column>
                     </template>
 
