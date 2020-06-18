@@ -3,13 +3,23 @@
         <b-navbar>
             <template slot="end">
                 <b-navbar-item tag="div">
-                    <button class="button is-primary" @click="newSupplierModal">
+                    <button class="button is-primary" :disabled="this.info.role === 'ADMIN'" @click="newSupplierModal">
                         <b-icon pack="fas" icon="plus"></b-icon>
                         <span>New Supplier</span>
                     </button>
                 </b-navbar-item>
             </template>
         </b-navbar>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Supplier Management</h1>
+                    <h2 class="subtitle">
+                        {{ suppliers.length }} Suppliers
+                    </h2>
+                </div>
+            </div>
+        </section>
         <div class="container">
             <div v-if="info.role === 'USER'" class="content has-text-grey has-text-centered">
                 <p>
@@ -25,6 +35,7 @@
                     :city="supplier.city"
                     :state="supplier.state"
                     :id="supplier.id"
+                    :ownerId="supplier.userid"
                     :form="supplier"
                     @reload="reloadSuppliers"
                 />
@@ -66,7 +77,15 @@ export default {
     }),
     async mounted() {
         if (this.info.role === "SELLER") {
-            await this.getSuppliers();
+            this.suppliers = await this.getSuppliers();
+        } else if (this.info.role === "ADMIN") {
+            this.$buefy.notification.open({
+                    message: 'You are in ADMIN mode!',
+                    position: 'is-bottom-right',
+                    type: 'is-warning',
+                    hasIcon: true
+                })
+            this.suppliers = await this.getAllSuppliers();
         }
     },
     methods: {
@@ -87,10 +106,18 @@ export default {
             let _this = this;
             return this.$axios
                 .$get("/suppliers/")
-                .then(res => {
-                    _this.suppliers = res;
-                    console.log(res)
-                })
+                .catch(e => {
+                    this.$buefy.toast.open({
+                        duration: 3000,
+                        message: e,
+                        position: "is-bottom",
+                        type: "is-danger"
+                    });
+                });
+        },
+        getAllSuppliers() {
+            return this.$axios
+                .$get("/suppliers/all")
                 .catch(e => {
                     this.$buefy.toast.open({
                         duration: 3000,

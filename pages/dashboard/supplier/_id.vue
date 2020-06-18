@@ -16,7 +16,7 @@
             </template>
             <template slot="end">
                 <b-navbar-item tag="div">
-                    <button class="button is-primary" @click="newProductModal">
+                    <button class="button is-primary" :disabled="this.info.role === 'ADMIN'" @click="newProductModal">
                         <b-icon pack="fas" icon="plus"></b-icon>
                         <span>New Product</span>
                     </button>
@@ -28,15 +28,17 @@
                 <div class="container">
                     <h1 class="title">{{ this.supplier.name }}</h1>
                     <h2 class="subtitle">
-                        {{ supplier.city }}
-                        {{
-                            supplier.city
-                                ? ", " + supplier.state
-                                : supplier.state
-                        }}
+                        {{ supplier.city }}{{supplier.city? ", " + supplier.state: supplier.state}}
                         <br />
                         {{ products.length }} Products
                     </h2>
+                    <p v-if="info.role === 'ADMIN'">
+                        <i>{{ owner.firstName }} {{ owner.lastName }}</i>
+                        <br>
+                        <i>{{ owner.username }}</i>
+                        <br>
+                        <i>{{ owner.id }}</i>
+                    </p>
                 </div>
             </div>
         </section>
@@ -86,6 +88,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ProductCard from "@/components/ProductCard";
 import newProduct from "@/components/form/newProduct";
 export default {
@@ -103,9 +106,13 @@ export default {
             isLoading: false,
             supplier: {},
             error: null,
-            products: []
+            products: [],
+            owner: {}
         };
     },
+    computed: mapState({
+        info: state => state.Login.info
+    }),
     async mounted() {
         if (this.error) {
             this.$buefy.toast.open({
@@ -114,6 +121,9 @@ export default {
             });
         } else {
             this.products = await this.getProducts();
+        }
+        if (this.info.role === "ADMIN") {
+            this.owner = await this.getOwnerInfo();
         }
     },
     async asyncData({ route, params, $axios }) {
@@ -149,6 +159,15 @@ export default {
                     supplierId: this.$route.params.id
                 }
             });
+        },
+        getOwnerInfo() {
+            return this.$axios.$get("/users/"+this.supplier.userid).catch(e => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Something got error!",
+                        type: "is-danger"
+                    });
+            })
         }
     }
 };

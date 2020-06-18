@@ -4,6 +4,14 @@
             <div class="card-content">
                 <p class="title">{{ name }}</p>
                 <p class="subtitle">{{ city }} {{ city ? ", "+state : state}}</p>
+                <p v-if="info.role === 'ADMIN'">
+                    <i>{{ owner.firstName }} {{ owner.lastName }}</i>
+                    <br>
+                    <i>{{ owner.username }}</i>
+                    <br>
+                    <i>{{ ownerId }}</i>
+                </p>
+                
             </div>
             <footer class="card-footer">
                 <nuxt-link :to="{ path: '/dashboard/supplier/'+id}" class="card-footer-item">
@@ -38,17 +46,27 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import editSupplier from '@/components/form/editSupplier';
 export default {
     data() {
         return {
-            isComponentModalActive: false
+            isComponentModalActive: false,
+            owner: {}
         }
     },
     components: {
         editSupplier
     },
-    props: ["name", "city", "state", "id", "form"],
+    computed: mapState({
+        info: state => state.Login.info
+    }),
+    props: ["name", "city", "state", "id", "ownerId", "form"],
+    async mounted() {
+        if (this.info.role === "ADMIN") {
+            this.owner = await this.getOwnerInfo();
+        }
+    },
     methods: {
         deleteSupplierDialog() {
             this.$buefy.dialog.confirm({
@@ -84,6 +102,15 @@ export default {
         reloadSupplier() {
             this.isComponentModalActive = false;
             this.$emit("reload")
+        },
+        getOwnerInfo() {
+            return this.$axios.$get("/users/"+this.ownerId).catch(e => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Something got error!",
+                        type: "is-danger"
+                    });
+            })
         }
     }
 };
