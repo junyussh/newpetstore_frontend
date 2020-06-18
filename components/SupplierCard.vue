@@ -16,7 +16,7 @@
                         <b-icon pack="fas" icon="edit" size="is-small"></b-icon>Edit
                     </span>
                 </p>
-                <p class="card-footer-item" @click="deleteSupplier">
+                <p class="card-footer-item" @click="deleteSupplierDialog">
                     <span>
                         <a class="is-danger">
                             <b-icon pack="fas" icon="trash-alt" size="is-small"></b-icon>Delete
@@ -50,7 +50,7 @@ export default {
     },
     props: ["name", "city", "state", "id", "form"],
     methods: {
-        deleteSupplier() {
+        deleteSupplierDialog() {
             this.$buefy.dialog.confirm({
                 title: "Deleting supplier",
                 message:
@@ -58,8 +58,25 @@ export default {
                 confirmText: "Delete Supplier",
                 type: "is-danger",
                 hasIcon: true,
-                onConfirm: () => this.$buefy.toast.open("Account deleted!")
+                onConfirm: () => this.deleteSupplier()
             });
+        },
+        deleteSupplier() {
+            let _this = this;
+            this.$axios.$delete("/suppliers/"+this.id).then(res => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Supplier "+this.name+" deleted!",
+                        type: "is-success"
+                    });
+                _this.reloadSupplier();
+            }).catch(e => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Something got error!",
+                        type: "is-danger"
+                    });
+            })
         },
         editSupplier() {
             this.isComponentModalActive = true;
