@@ -45,7 +45,7 @@
                     Cancel
                 </button>
                 <button class="button is-primary" @click="addProduct">
-                    Create
+                    Add
                 </button>
             </footer>
         </div>
