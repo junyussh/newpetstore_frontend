@@ -13,7 +13,7 @@
                     <b-icon pack="fas" icon="boxes" size="is-small"></b-icon>Manage
                 </span>
             </nuxt-link>
-            <p class="card-footer-item">
+            <p class="card-footer-item" @click="isComponentModalActive = true">
                 <span>
                     <b-icon pack="fas" icon="edit" size="is-small"></b-icon>Edit
                 </span>
@@ -27,12 +27,31 @@
             </p>
         </footer>
     </div>
+    <b-modal
+            :active.sync="isComponentModalActive"
+            has-modal-card
+            trap-focus
+            :destroy-on-hide="false"
+            aria-role="dialog"
+            aria-modal
+        >
+            <editProduct @reload="reloadProduct" :newForm="product"></editProduct>
+        </b-modal>
 </div>
 </template>
 
 <script>
+import editProduct from '@/components/form/editProduct';
 export default {
-    props: ["name", "description", "id"],
+    props: ["name", "description", "id", "product"],
+    components: {
+        editProduct
+    },
+    data() {
+        return {
+            isComponentModalActive: false
+        }
+    },
     methods: {
         deleteProductDialog() {
             this.$buefy.dialog.confirm({

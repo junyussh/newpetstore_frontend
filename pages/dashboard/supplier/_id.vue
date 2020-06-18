@@ -48,6 +48,7 @@
                     :name="product.name"
                     :description="product.description"
                     :id="product.id"
+                    :product="product"
                     @reload="reloadProducts"
                 />
             </div>
