@@ -48,6 +48,7 @@
                     :name="product.name"
                     :description="product.description"
                     :id="product.id"
+                    @reload="reloadProducts"
                 />
             </div>
             <div
@@ -133,7 +134,6 @@ export default {
     },
     methods: {
         async reloadProducts() {
-            console.log("reload");
             this.isLoading = true;
             this.products = await this.getProducts();
             this.isLoading = false;
