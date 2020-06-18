@@ -13,13 +13,7 @@
             <div class="columns">
                 <!-- {{products[0].name}}
                 {{products[0].description}} -->
-                <ProductCard v-for="(product, index) in products"
-                    :key="index"
-                    :name="product.name"
-                    :description="product.description"
-                    :supplier="product.supplierId"
-                    :id="product.id"
-                />
+                <ProductCard v-for="(product, index) in products" :key="index" :name="product.name" :description="product.description" :supplier="product.supplierId" :id="product.id" />
                 <!-- <SupplierCard
                     :key="index"
                     :name="product.name"
@@ -57,11 +51,11 @@ export default {
         } else {
             this.products = await this.$axios.$get("/products/all", {
                 params: {
-                    supplier: this.$route.params.id
+                    supplierId: this.$route.params.id
                 }
             });
-            console.log("already complete");
-            console.log(this.products)
+            // console.log("already complete");
+            // console.log(this.products)
         }
     },
     async asyncData({
@@ -86,7 +80,7 @@ export default {
             });
     },
     methods: {
-        ontest(){
+        ontest() {
             console.log(this.products)
         }
     }
