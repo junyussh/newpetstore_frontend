@@ -53,6 +53,11 @@ export default {
           title: 'Supplier',
           icon: 'store',
           to: { path: '/dashboard/supplier' }
+        },
+        {
+          title: 'Setting',
+          icon: 'cogs',
+          to: { path: '/dashboard/updateinfo'}
         }
       ]
     }
