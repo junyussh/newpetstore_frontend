@@ -57,7 +57,7 @@ export default {
         {
           title: 'Setting',
           icon: 'cogs',
-          to: { path: '/dashboard/updateinfo'}
+          to: { path: '/dashboard/setting'}
         }
       ]
     }

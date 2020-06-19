@@ -65,7 +65,9 @@
                     </b-dropdown-item>
                     <hr class="dropdown-divider" aria-role="menuitem" />
                     <b-dropdown-item value="settings">
-                        <b-icon pack="fas" icon="cogs"></b-icon>Settings
+                        <nuxt-link tag="div" :to="{ path: '/dashboard/setting'}">
+                            <b-icon pack="fas" icon="cogs"></b-icon> Settings
+                        </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="logout" aria-role="menuitem" @click="logoutHandler">
                         <b-icon pack="fas" icon="sign-out-alt"></b-icon>Logout
