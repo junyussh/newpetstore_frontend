@@ -84,7 +84,7 @@ export default {
       state.Cart[payload.key][payload.prop] = payload.val;
     },
     addCart(state, data) {
-      const item = state.Cart.find(e => e.productID == data.productID);
+      const item = state.Cart.find(e => e.itemId == data.itemId);
       if (item) {
         const temp =parseInt(item.amount)+parseInt(data.amount);
         if (temp > item.stock) {

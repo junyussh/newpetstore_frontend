@@ -11,10 +11,6 @@
     <div class="columns">
         <div class="column">
             <div class="columns">
-                <!-- <div class="column" v-for="item in items" :key=item>
-                    <ItemCard v-bind:title="item.productId" v-bind:supplier="item.attribute" image="https://source.unsplash.com/WLUHO9A_xik/1600x900"></ItemCard>
-                </div> -->
-
                 <SellerItemCard v-for="(item, index) in items" :key="index" :id="item.id" :attribute="product.attribute" :productId="product.productId" :supplierId="product.supplierId" />
             </div>
         </div>
