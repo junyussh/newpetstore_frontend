@@ -55,14 +55,9 @@ export default {
     },
     getTotalPrice(state) {
       // 购物车勾选的商品总价格
-      let totalPrice = 0;
-      for (let i = 0; i < state.Cart.length; i++) {
-        const temp = state.Cart[i];
-        if (temp.check) {
-          totalPrice += temp.price * temp.num;
-        }
-      }
-      return totalPrice;
+      return state.Cart.reduce((previousValue, currentValue) => {
+        return previousValue+currentValue.amount*currentValue.price
+      }, 0)
     }
   },
   mutations: {
@@ -88,16 +83,27 @@ export default {
       // 根据商品在购物车的数组的索引和属性更改
       state.Cart[payload.key][payload.prop] = payload.val;
     },
-    addCartNum(state, productID) {
-      // 增加购物车商品数量
-      // 用于在商品详情页点击添加购物车,该商品已在购物车时，数量 +1”，更新vuex的商品数量
-      for (let i = 0; i < state.Cart.length; i++) {
-        const temp = state.Cart[i];
-        if (temp.productName == productName) {
-          temp.num++;
+    addCart(state, data) {
+      const item = state.Cart.find(e => e.productID == data.productID);
+      if (item) {
+        const temp =parseInt(item.amount)+parseInt(data.amount);
+        if (temp > item.stock) {
+          return false;
+        } else {
+          item.amount = temp;
         }
+      } else {
+        data.amount = parseInt(data.amount)
+        data.price = parseFloat(data.price)
+        state.Cart.push(data)
       }
     },
+    minusItem(state, index) {
+      state.Cart[index].amount--;
+    },
+    plusItem(state, index) {
+      state.Cart[index].amount++;
+    }
   },
   actions: {
     setCart({
@@ -105,20 +111,15 @@ export default {
     }, data) {
       commit('setCart', data);
     },
-    unshiftCart({
+    addCart({
       commit
     }, data) {
-      commit('unshiftCart', data);
+      commit('addCart', data);
     },
     updateCart({
       commit
     }, payload) {
       commit('updateCart', payload);
-    },
-    addCartNum({
-      commit
-    }, productID) {
-      commit('addCartNum', productID);
     },
   }
 }
