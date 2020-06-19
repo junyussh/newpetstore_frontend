@@ -3,8 +3,8 @@
     <section class="hero">
         <div class="hero-body">
             <div class="container">
-                <p class="title">Sign Up</p>
-                <p class="subtitle">Sign up an account for purchasing pets</p>
+                <p class="title">账户信息修改</p>
+                <p class="subtitle">Account information modification</p>
             </div>
         </div>
     </section>
@@ -290,7 +290,7 @@
                 </b-field>
             </b-field>
             <b-field>
-                <b-button @click="handleUpdateInfo" expanded rounded>Sign Up</b-button>
+                <b-button @click="handleUpdateInfo" expanded rounded>更新信息</b-button>
             </b-field>
         </div>
     </section>
@@ -327,7 +327,7 @@ export default {
     methods: {
         handleUpdateInfo() {
             console.log(this.form);
-            this.$axios.$put("/users/" + this.info.id, this.form)
+            this.$axios.$put("/users/me",this.form)
         }
     }
 }
