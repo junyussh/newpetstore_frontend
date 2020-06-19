@@ -1,67 +1,53 @@
 <template>
-  <section class="section">
+<section class="section">
     <div class="columns is-mobile">
-      <card
-        title="Free"
-        icon="github-circle"
-      >
-        Open source on <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
-
-      <card
-        title="Responsive"
-        icon="cellphone-link"
-      >
-        <b class="has-text-grey">
-          Every
-        </b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">
-          Vue.js
-        </a> and <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
-      </card>
-
-      <Cart></Cart>
-      
-      <button @click="ontest">test</button>
-      
+         <div class="column">
+            <div class="columns">
+                <ItemCard v-for="(item, index) in items" 
+                :key="index" 
+                :title="item.attribute" 
+                :supplier="item.supplierId" 
+                :productId="item.productId" />
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 </template>
 
 <script>
 import Card from '~/components/Card';
 import Cart from '~/components/Cart';
-
+import ItemCard from "@/components/ItemCard";
 export default {
-  name: 'HomePage',
-  layout: "dashboard",
+    name: 'HomePage',
+    layout: "dashboard",
+    data() {
+        return {
+            items: []
+        };
+    },
+    async mounted() {
+        if (this.error) {
+            this.$buefy.toast.open({
+                message: "something get errors",
+                type: "is-danger"
+            });
+        } else {
+            this.items = await this.$axios.$get("/items/all");
+        }
+        this.items = await this.$axios.$get("/items/all");
+    },
 
-  components: {
-    Card,
-    Cart
-  },
-  methods: {
-    ontest() {
-      console.log("is testing");
-      console.log(this.$store.state.Login.info);
+    components: {
+        Card,
+        Cart,
+        ItemCard
+    },
+    methods: {
+        ontest() {
+            console.log("is testing");
+            console.log(this.$store.state.Login.info);
+        }
     }
-  }
 }
 </script>
