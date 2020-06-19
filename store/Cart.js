@@ -8,9 +8,11 @@ export default {
         id: "", // #
         productID: "", // 商品id
         productName: "", // 商品名称
+        attribute: "",  //外观
         Supplier: "", //供货商
         price: "", // 商品价格
         num: "", // 商品数量
+        maxNum: "", // 商品限购数量
         check: false // 是否勾选
       } */
     }
