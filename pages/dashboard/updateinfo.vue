@@ -17,11 +17,9 @@
             <b-field label="Email">
                 <b-input name="email" v-model="form.email" type="email" :placeholder="this.info.email">{{this.info.email}}</b-input>
             </b-field>
-
             <!-- <b-field label="Password">
                 <b-input name="password" v-model="form.password" :placeholder="this.info.password">{{this.info.password}}</b-input>
             </b-field> -->
-
             <b-field label="First Name">
                 <b-input name="firstname" :placeholder="this.info.firstName" v-model="form.firstName" type="text">{{this.info.firstName}}</b-input>
             </b-field>
@@ -326,33 +324,10 @@ export default {
     computed: mapState({
         info: state => state.Login.info
     }),
-    async mounted() {
-        // console.log(this.info)
-    },
     methods: {
         handleUpdateInfo() {
             console.log(this.form);
             this.$axios.$put("/users/" + this.info.id, this.form)
-            // this.$axios({
-            //     methods: PUT,
-            //     url: '/users',
-            //     params: {
-            //         accountId:this.info.accountId
-            //     },
-            //     data: this.form
-            // }).catch(e =>
-            //     this.danger(e)
-            // )
-            // })
-            // this.$axios.$post("/register", this.form).then(res => {
-            //     if (res.id) {
-            //         this.clearForm();
-            //         this.success("You've been our member, redirecting to login page");
-            //         this.$router.push("/login");
-            //     }
-            // }).catch(e => {
-            //     this.danger(e);
-            // })
         }
     }
 }
