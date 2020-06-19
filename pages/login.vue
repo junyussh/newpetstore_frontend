@@ -70,7 +70,6 @@
   </section>
 </template>
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
 import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
@@ -100,11 +99,12 @@ export default {
                 })
     },
     handleLoginButton() {
+      console.log(this.credentials);
       this.signin(this.credentials).then(res => {
         this.success("Welcome back");
         this.$router.push("/dashboard")
       }).catch(err => {
-        this.danger(err.response.data.message);
+        this.danger(err);
       })
     }
   }

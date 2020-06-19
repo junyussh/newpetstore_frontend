@@ -25,6 +25,7 @@
               <b-button class="button md-button">
                 <b-icon pack="fas" icon="cart-plus" size="is-small"></b-icon>
                 <span> Add to cart</span>
+                 <!-- <el-button @click="addShoppingCart">Add to cart</el-button> -->
               </b-button>
             </div>
           </div>

@@ -27,7 +27,7 @@
             />
             <p>{{Product[index].name}}</p>
           </div>
-        </div> -->
+        </div>-->
       </div>
       <div class="columns" style="width:50%; margin:auto;">
         <div class="column">
@@ -60,7 +60,10 @@
         <div class="column">
           <div class="columns is-mobile">
             <div class="column">
-              <div></div>
+              <div>
+                <button @click="addShoppingCart">Add to cart</button>
+                <button @click="toCart">To see cart</button>
+              </div>
               <!-- <img src="..\static\mao1.gif" width="100%" height="80%"> -->
             </div>
             <div class="column">
@@ -93,6 +96,7 @@
 
 
 <script>
+import { mapActions } from "vuex";
 import ItemCard from "@/components/ItemCard";
 export default {
   data() {
@@ -137,7 +141,18 @@ export default {
           zip: "",
           phone: ""
         }
-      ]
+      ],
+      Cart : {
+        id: "2", // #
+        productID: "345", // 商品id
+        productName: "测试", // 商品名称
+        attribute: "cute",
+        Supplier: "2456", //供货商
+        price: "12300", // 商品价格
+        num: "3", // 商品数量
+        maxNum: "6", // 商品限购数量
+        check: true // 是否勾选
+      }
     };
   },
   components: {
@@ -148,7 +163,7 @@ export default {
       (this.userrole = this.$store.state.Login.info.role),
       console.log(this.$data.userrole);
     // this.form.supplierId = this.$store.state.Login.info.id;
-    console.log("products")
+    console.log("products");
     this.Product = await this.getAllProducts();
     console.log(this.Product);
     this.getAllCategory();
@@ -156,6 +171,8 @@ export default {
     this.isHidden();
   },
   methods: {
+    ...mapActions({ unshiftCart: "Cart/unshiftCart" }),
+    ...mapActions({ addCartNum: "Cart/addCartNum" }),
     getImgUrl(value) {
       return `https://source.unsplash.com/1300x732/?animal?cute${value}`;
     },
@@ -207,6 +224,33 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+    addShoppingCart() {
+      console.log("into addShoppingCart")
+      // 判断是否登录
+      if (!this.$store.state.Login.info) {
+        this.$buefy.toast.open({
+          duration: 3000,
+          message: "Please Login First.",
+          position: "is-bottom",
+          type: "is-success"
+        });
+        this.$router.push("/login");
+        return;
+      }
+      // 新加入购物车成功
+      this.unshiftCart(this.Cart);
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: "Add success.",
+        position: "is-bottom",
+        type: "is-success"
+      });
+    },
+    toCart() {
+      this.$router.push("/dashboard");
+      console.log("this is cart infomation:")
+      console.log(this.$store.state.Cart.Cart)
     }
   }
 };
