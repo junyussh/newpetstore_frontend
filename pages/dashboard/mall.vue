@@ -1,8 +1,7 @@
 <template>
 <section class="section">
     <div class="columns is-mobile">
-        <p>所有用户进来之后都会先进入欢迎界面，这是一个欢迎界面</p>
-         <!-- <div class="column">
+         <div class="column">
             <div class="columns">
                 <ItemCard v-for="(item, index) in items" 
                 :key="index" 
@@ -10,7 +9,7 @@
                 :supplier="item.supplierId" 
                 :productId="item.productId" />
             </div>
-        </div> -->
+        </div>
     </div>
 </section>
 </template>

@@ -147,10 +147,11 @@ export default {
         productID: "345", // 商品id
         productName: "测试", // 商品名称
         attribute: "cute",
-        Supplier: "2456", //供货商
+        supplierName: "2456", //供货商,
+        supplierId: "12387",
         price: "12300", // 商品价格
-        num: "3", // 商品数量
-        maxNum: "6", // 商品限购数量
+        amount: "3", // 商品数量
+        stock: "6", // 商品限购数量
         check: true // 是否勾选
       }
     };
@@ -171,8 +172,10 @@ export default {
     this.isHidden();
   },
   methods: {
-    ...mapActions({ unshiftCart: "Cart/unshiftCart" }),
-    ...mapActions({ addCartNum: "Cart/addCartNum" }),
+    ...mapActions({ 
+      unshiftCart: "Cart/unshiftCart",
+      addCart: "Cart/addCart"
+    }),
     getImgUrl(value) {
       return `https://source.unsplash.com/1300x732/?animal?cute${value}`;
     },
@@ -239,7 +242,7 @@ export default {
         return;
       }
       // 新加入购物车成功
-      this.unshiftCart(this.Cart);
+      this.addCart(this.Cart);
       this.$buefy.toast.open({
         duration: 3000,
         message: "Add success.",

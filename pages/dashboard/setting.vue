@@ -11,32 +11,32 @@
     <section class="section">
         <div class="container">
             <b-field label="Username">
-                <b-input name="username" v-model="form.username" :placeholder="this.info.username" :value="this.info.username">{{this.info.username}}</b-input>
+                <b-input name="username" v-model="form.username" placeholder="Username" :value="this.info.username"></b-input>
             </b-field>
 
             <b-field label="Email">
-                <b-input name="email" v-model="form.email" type="email" :placeholder="this.info.email">{{this.info.email}}</b-input>
+                <b-input name="email" v-model="form.email" type="email" placeholder="Email"></b-input>
             </b-field>
             <!-- <b-field label="Password">
                 <b-input name="password" v-model="form.password" :placeholder="this.info.password">{{this.info.password}}</b-input>
             </b-field> -->
             <b-field label="First Name">
-                <b-input name="firstname" :placeholder="this.info.firstName" v-model="form.firstName" type="text">{{this.info.firstName}}</b-input>
+                <b-input name="firstname" placeholder="First Name" v-model="form.firstName" type="text"></b-input>
             </b-field>
             <b-field label="Last Name">
-                <b-input name="lastname" :placeholder="this.info.lastName" v-model="form.lastName" type="text">{{this.info.lastName}}</b-input>
+                <b-input name="lastname" placeholder="Last Name" v-model="form.lastName" type="text"></b-input>
             </b-field>
             <b-field label="Address1">
-                <b-input name="address1" :placeholder="this.info.address1" v-model="form.address1" type="text">{{this.info.address1}}</b-input>
+                <b-input name="address1" placeholder="Address 1" v-model="form.address1" type="text"></b-input>
             </b-field>
             <b-field label="Address2">
-                <b-input name="address2" :placeholder="this.info.address2" v-model="form.address2" type="text">{{this.info.address2}}</b-input>
+                <b-input name="address2" placeholder="Address 2" v-model="form.address2" type="text"></b-input>
             </b-field>
             <b-field label="Phone number">
-                <b-input name="phone" type="tel" :placeholder="this.info.phone" v-model="form.phone">{{this.info.phone}}</b-input>
+                <b-input name="phone" type="tel" placeholder="Phone" v-model="form.phone"></b-input>
             </b-field>
             <b-field label="Country">
-                <b-select v-model="form.country" :placeholder="this.info.country">
+                <b-select v-model="form.country" placeholder="Country">
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Albania">Albania</option>
                     <option value="Algeria">Algeria</option>
@@ -280,17 +280,17 @@
             </b-field>
             <b-field grouped>
                 <b-field label="City">
-                    <b-input name="city" v-model="form.city" :placeholder="this.info.city" :value="this.info.city">{{this.info.city}}</b-input>
+                    <b-input name="city" v-model="form.city" placeholder="City" :value="this.info.city"></b-input>
                 </b-field>
                 <b-field label="State">
-                    <b-input name="state" v-model="form.state" :placeholder="this.info.state">{{this.info.state}}</b-input>
+                    <b-input name="state" v-model="form.state" placeholder="State"></b-input>
                 </b-field>
-                <b-field label="zip">
-                    <b-input name="zip" v-model="form.zip" :placeholder="this.info.zip">{{this.info.zip}}</b-input>
+                <b-field label="Zip">
+                    <b-input name="zip" v-model="form.zip" placeholder="Zip Code"></b-input>
                 </b-field>
             </b-field>
             <b-field>
-                <b-button @click="handleUpdateInfo" expanded rounded>更新信息</b-button>
+                <b-button type="is-info" icon-left="save" pack="fas" @click="handleUpdateInfo" expanded>Save</b-button>
             </b-field>
         </div>
     </section>
@@ -324,10 +324,18 @@ export default {
     computed: mapState({
         info: state => state.Login.info
     }),
+    mounted() {
+        this.form = Object.assign({}, this.info);
+    },
     methods: {
         handleUpdateInfo() {
-            console.log(this.form);
-            this.$axios.$put("/users/me",this.form)
+            this.$axios.$put("/users/me",this.form).then(res => {
+                this.$buefy.toast.open({
+                    message: 'Account infomation updated successfully!',
+                    type: 'is-success'
+                })
+                this.$store.dispatch("Login/setInfo");
+            })
         }
     }
 }
