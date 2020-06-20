@@ -1,25 +1,54 @@
 <template>
 <section class="section">
+    <b-navbar>
+        <template slot="start">
+            <b-navbar-item tag="div">
+                <b-button tag="router-link" :to="{ path: '/dashboard/product/'+this.item.productId }" type="is-primary" outlined>
+                    <b-icon pack="fas" icon="chevron-left"></b-icon>
+                    <span>Go back</span>
+                </b-button>
+            </b-navbar-item>
+        </template>
+
+    </b-navbar>
     <section class="hero">
         <div class="hero-body">
             <div class="container">
-                {{item.productId}}
-                {{item.quantity}}
-                <!-- <h1 class="title">{{ this.product }}</h1>
-                <h2 class="subtitle">{{ product.description }} {{ product.description ? ", "+product.id : product.id}}</h2> -->
+                <p class="title">Update Item</p>
+                <p class="subtitle">{{item.id}} information update</p>
             </div>
         </div>
     </section>
-    <div class="columns">
-        <div class="column">
-            <div class="columns"></div>
+    <section class="section">
+        <div class="container">
+            <b-field label="unitprice">
+                <b-input name="unitprice" v-model="form.unitprice" :placeholder="item.unitprice"></b-input>
+            </b-field>
+
+            <b-field label="unitcost">
+                <b-input name="unitcost" v-model="form.unitcost" :placeholder="item.unitcost"></b-input>
+            </b-field>
+
+            <b-field label="quantity">
+                <b-input name="quantity" v-model="form.quantity" :placeholder="item.quantity"></b-input>
+            </b-field>
+
+            <b-field label="attribute">
+                <b-input name="attribute" v-model="form.attribute" :placeholder="item.attribute"></b-input>
+            </b-field>
+
+            <b-field>
+                <b-button @click="handleSignupBtn" expanded rounded>update Info</b-button>
+            </b-field>
         </div>
-        <div class="column"></div>
-    </div>
+    </section>
 </section>
 </template>
 
 <script>
+import {
+    mapState
+} from "vuex";
 import ItemCard from "@/components/ItemCard";
 import SellerItemCard from "@/components/SellerItemCard";
 export default {
@@ -29,9 +58,18 @@ export default {
     },
     data() {
         return {
-            item: {}
+            item: {},
+            form: {
+                unitprice: "",
+                unitcost: "",
+                quantity: "",
+                attribute: ""
+            }
         };
     },
+    computed: mapState({
+        info: state => state.Login.info
+    }),
     async mounted() {
         if (this.error) {
             this.$buefy.toast.open({
@@ -39,18 +77,10 @@ export default {
                 type: "is-danger"
             });
         } else {
-            this.item = await this.$axios.$get("/items/", {
-                param: {
-                    itemId: this.$route.params.id
-                }
-            });
+            this.item = await this.$axios.$get("/items/" + this.$route.params.id);
 
         }
-        this.item = await this.$axios.$get("/items/", {
-            params: {
-                itemId: this.$route.params.id
-            }
-        });
+        this.item = await this.$axios.$get("/items/" + this.$route.params.id);
     },
     async asyncData({
         route,

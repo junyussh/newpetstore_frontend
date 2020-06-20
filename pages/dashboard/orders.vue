@@ -7,12 +7,9 @@
                     {{ props.index+1 }}
                 </b-table-column>
 
-                <b-table-column field="itemId" label="itemId" centered>
-                    {{ props.row.itemId }}
-                </b-table-column>
 
-                <b-table-column field="productId" label="productId" centered>
-                    {{ props.row.productId }}
+                <b-table-column field="id" label="id" centered>
+                    {{ props.row.id }}
                 </b-table-column>
 
                 <b-table-column field="productName" label="productName" centered>
@@ -31,10 +28,6 @@
                     {{ props.row.quantity }}
                 </b-table-column>
 
-                <b-table-column field="quantity" label="quantity" centered>
-                    {{ props.row.quantity }}
-                </b-table-column>
-
                 <b-table-column field="total" label="total" centered>
                     {{ props.row.total }}
                 </b-table-column>
@@ -47,32 +40,12 @@
                     {{ props.row.created }}
                 </b-table-column>
 
-                <b-table-column field="shipAddr1" label="shipAddr1" centered>
-                    {{ props.row.shipAddr1 }}
-                </b-table-column>
-
-                <b-table-column field="shipAddr2" label="shipAddr2" centered>
-                    {{ props.row.shipAddr2 }}
-                </b-table-column>
-
-                <b-table-column field="shipCity" label="shipCity" centered>
-                    {{ props.row.shipCity }}
-                </b-table-column>
-
-                <!-- <b-table-column field="shipState" label="shipState" centered>
-                    {{ props.row.shipState }}
-                </b-table-column>
-
-                <b-table-column field="shipZip" label="shipZip" centered>
-                    {{ props.row.shipZip }}
+                <!-- <b-table-column field="edit" label="edit" centered>
+                    <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @click="edit(props.row.id)">edit</b-button>
                 </b-table-column> -->
 
-                <b-table-column field="edit" label="edit" centered>
-                    <b-button type="is-info" pack="fas" icon-right="plus" size="is-small" @click="add(props.index)">edit</b-button>
-                </b-table-column>
-
                 <b-table-column field="delete" label="delete" centered>
-                    <b-button type="is-danger" pack="fas" icon-right="minus" size="is-small" @click="minus(props.index)">delete</b-button>
+                    <b-button type="is-danger" pack="fas" icon-right="minus" size="is-small" @click="remove(props.row.id)">delete</b-button>
                 </b-table-column>
 
             </template>
@@ -88,6 +61,7 @@
                     </div>
                 </section>
             </template>
+
         </b-table>
     </div>
 </section>
@@ -130,15 +104,12 @@ export default {
                     }
                 }
             }
-
-            // this.accountList = await this.$axios.$get("/users/all");
         }
-
-        console.log("print info")
-        console.log(this.info)
-        // console.log(this.info.id)
-        console.log(this.orders)
     },
-
+    methods:{
+        remove(id){
+            // this.$axios.$delete("/orders")
+        }
+    }
 }
 </script>
