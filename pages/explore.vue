@@ -28,9 +28,7 @@
           </div>
         </div>  
 
-      <div class="columns">
-        <span style="margin-left:10%;">One sky, one home.</span>
-      </div>
+      
       <br />
       <div class="columns" style="width:50%; margin:auto">
         <div class="column">
@@ -44,11 +42,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="columns">
-        <span
-          style="margin-left:10%; width:30%"
-        >The song of birds is the most beautiful sound of nature, so that the voice will always reverberate in our ears.</span>
       </div>
       <br />
     </div>
