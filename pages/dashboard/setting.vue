@@ -17,9 +17,14 @@
             <b-field label="Email">
                 <b-input name="email" v-model="form.email" type="email" placeholder="Email"></b-input>
             </b-field>
-            <!-- <b-field label="Password">
-                <b-input name="password" v-model="form.password" :placeholder="this.info.password">{{this.info.password}}</b-input>
-            </b-field> -->
+            <b-field label="Password" :type="{ 'is-danger': hasError }"
+            :message="{ 'Password is not same': hasError }">
+                <b-input type="password" name="password" v-model="form.password" placeholder="Password"></b-input>
+            </b-field>
+            <b-field label="Confirm Password" :type="{ 'is-danger': hasError }"
+            :message="{ 'Password is not same': hasError }">
+                <b-input type="password" name="confirm_password" v-model="confirm_password" placeholder="Confirm Password"></b-input>
+            </b-field>
             <b-field label="First Name">
                 <b-input name="firstname" placeholder="First Name" v-model="form.firstName" type="text"></b-input>
             </b-field>
@@ -306,6 +311,8 @@ export default {
     data() {
         return {
             account: {},
+            hasError: false,
+            confirm_password: null,
             form: {
                 username: "",
                 email: "",
@@ -326,16 +333,23 @@ export default {
     }),
     mounted() {
         this.form = Object.assign({}, this.info);
+        this.form.password = "";
+        this.confirm_password = this.form.password;
     },
     methods: {
         handleUpdateInfo() {
-            this.$axios.$put("/users/me",this.form).then(res => {
+            if (this.confirm_password != this.form.password) {
+                this.hasError = true;
+            } else {
+                this.hasError = false;
+                this.$axios.$put("/users/me",this.form).then(res => {
                 this.$buefy.toast.open({
                     message: 'Account infomation updated successfully!',
                     type: 'is-success'
                 })
                 this.$store.dispatch("Login/setInfo");
             })
+            }
         }
     }
 }

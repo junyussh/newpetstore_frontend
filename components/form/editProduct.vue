@@ -28,6 +28,7 @@
                 <b-field label="Image URL">
                     <b-input
                         v-model="form.image"
+                        type="url"
                         placeholder="Product Image URL"
                     ></b-input>
                 </b-field>
