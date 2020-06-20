@@ -101,7 +101,7 @@ export default {
         },
         async reloadSuppliers() {
             this.isLoading = true;
-            await this.getSuppliers();
+            this.suppliers = await this.getSuppliers();
             this.isLoading = false;
             this.isComponentModalActive = false;
         },

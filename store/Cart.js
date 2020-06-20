@@ -84,9 +84,7 @@ export default {
       state.Cart[payload.key][payload.prop] = payload.val;
     },
     addCart(state, data) {
-      console.log(data)
       const item = state.Cart.find(e => e.itemId == data.itemId);
-      console.log(item)
       if (item) {
         const temp =parseInt(item.amount)+parseInt(data.amount);
         if (temp > item.stock) {
@@ -98,7 +96,6 @@ export default {
         data.amount = parseInt(data.amount)
         data.price = parseFloat(data.price)
         state.Cart.push(data)
-        console.log(state.Cart)
       }
     },
     minusItem(state, index) {
