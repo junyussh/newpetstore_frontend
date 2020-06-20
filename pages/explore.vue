@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-green">
+  <section>
     <div>
       <div>
         <b-carousel :indicator-inside="false" class style="margin:auto;width: 50%">
@@ -17,41 +17,17 @@
       </div>
       <br />
       <br />
-      <div class="column" style="width:50%; margin:auto;">
-        <!-- <div class="columns is-mobile">
-          <div class="column" v-for="(index) in 2" :key="index">
+        <div class="wrapper" style="width:50%; margin:auto;">   
+          <div  class="wrapper-content" v-for="product in Product" :key="product">
             <ItemCard
-              :title="Product[index].name"
-              :supplier="Product[index].supplierId"
-              :image="Product[index].image"
+              :title="product.name"
+              :supplier="product.supplierId"
+              :image="product.image"
+              :productId="product.id"
             />
-            <p>{{Product[index].name}}</p>
           </div>
-        </div>-->
-      </div>
-      <div class="columns" style="width:50%; margin:auto;">
-        <div class="column">
-          <div class="columns is-mobile">
-            <div class="column">
-              <ItemCard
-                title="藏獒"
-                supplier="寵物商店"
-                image="https://gd.tw.workers.dev/IMG_0199(20200615-134550).JPG"
-              />
-            </div>
-            <div class="column">
-              <ItemCard
-                :title="Product[0].name"
-                :supplier="Product[0].supplierId"
-                image="http://i1.bagong.cn/73/53/1469f9a368322a8d4745b6822be8_200x200_1.jpg"
-              />
-            </div>
-            <div class="column">
-              <ItemCard title="測試商品" supplier="寵物商店" image="https://gd.tw.workers.dev/gou.JPG" />
-            </div>
-          </div>
-        </div>
-      </div>
+        </div>  
+
       <div class="columns">
         <span style="margin-left:10%;">One sky, one home.</span>
       </div>
@@ -65,20 +41,6 @@
                 <button @click="toCart">To see cart</button>
               </div>
               <!-- <img src="..\static\mao1.gif" width="100%" height="80%"> -->
-            </div>
-            <div class="column">
-              <ItemCard
-                title="測試商品"
-                supplier="寵物商店"
-                image="https://source.unsplash.com/WLUHO9A_xik/1600x900"
-              />
-            </div>
-            <div class="column">
-              <ItemCard
-                title="測試商品"
-                supplier="寵物商店"
-                image="https://source.unsplash.com/WLUHO9A_xik/1600x900"
-              />
             </div>
           </div>
         </div>
@@ -266,4 +228,16 @@ export default {
 .al img {
   filter: grayscale(100%);
 }
+.wrapper{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.wrapper-content{
+  width: 33%;
+}
+
 </style>

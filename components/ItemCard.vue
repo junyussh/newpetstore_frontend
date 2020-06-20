@@ -24,7 +24,9 @@
             <div class="level-item">
               <b-button class="button md-button">
                 <b-icon pack="fas" icon="cart-plus" size="is-small"></b-icon>
-                <span> Add to cart</span>
+                 <nuxt-link :to="{ path: '/product/'+ productId}">
+                   <span>View Details</span>
+                </nuxt-link>
                  <!-- <el-button @click="addShoppingCart">Add to cart</el-button> -->
               </b-button>
             </div>
@@ -58,7 +60,12 @@ export default {
     image: {
       type: String,
       default: "https://source.unsplash.com/l1meQCttaqs/1280x960"
-    }
+    },
+    productId: {
+      type: String,
+      required: true,
+      default: "Undefined"
+    },
   }
 };
 </script>
