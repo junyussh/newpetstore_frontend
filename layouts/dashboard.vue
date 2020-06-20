@@ -27,6 +27,16 @@
                         <b-icon icon='store' />Manage
                     </nuxt-link>
                 </li>
+                <li v-if="info.role == 'USER'">
+                    <nuxt-link to='/dashboard/orders' exact-active-class="is-active">
+                        <b-icon icon='store' />order
+                    </nuxt-link>
+                </li>
+                <li v-if="info.role == 'SELLER'">
+                    <nuxt-link to='/dashboard/orders' exact-active-class="is-active">
+                        <b-icon icon='store' />order
+                    </nuxt-link>
+                </li>
                 <li>
                     <nuxt-link to='/dashboard/setting' exact-active-class="is-active">
                         <b-icon icon='cogs' />Setting
@@ -62,8 +72,8 @@ export default {
     }),
     async mounted() {
         // var userinfo = localStorage.getItem('userinfo'),
-        this.userinfo = this.$store.state.Login.info,
-            console.log('test in dashboard ' + this.$data.userinfo)
+        this.userinfo = this.$store.state.Login.info
+        console.log('test in dashboard ' + this.$data.userinfo)
         console.log(this.info)
     }
 }
