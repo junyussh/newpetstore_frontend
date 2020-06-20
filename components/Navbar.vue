@@ -72,7 +72,7 @@
                         </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="logout" aria-role="menuitem" @click="logoutHandler">
-                        <b-icon pack="fas" icon="sign-out-alt"></b-icon>Logout
+                        <b-icon pack="fas" icon="sign-out-alt"></b-icon> Logout
                     </b-dropdown-item>
                 </b-dropdown>
             </b-navbar-item>
