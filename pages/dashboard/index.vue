@@ -1,7 +1,14 @@
 <template>
 <section class="section">
-    <div class="columns is-mobile">
-        <p>所有用户进来之后都会先进入欢迎界面，这是一个欢迎界面</p>
+    <div style="margin:auto">
+        <div><h1 class="title" style="margin:auto">SpringProject Code by Chunyu,Aczy156 and Afun.</h1></div>
+        <br>
+        <br>
+        <div><h2 class="title" style="margin:auto">普通用户请往左<nuxt-link to="/explore">------></nuxt-link></h2></div>
+        <br>
+        <br>
+        <div><h2 class="title" style="margin:auto"><nuxt-link to="/dashboard/supplier"><------</nuxt-link>商家用户请往右</h2></div>
+    </div>    
          <!-- <div class="column">
             <div class="columns">
                 <ItemCard v-for="(item, index) in items" 
@@ -11,7 +18,6 @@
                 :productId="item.productId" />
             </div>
         </div> -->
-    </div>
 </section>
 </template>
 
