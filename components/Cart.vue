@@ -13,7 +13,7 @@
                 </div>
             </div> -->
             <div class="card-content">
-                <b-table :data="cart">
+                <b-table :data="item">
 
                     <template slot-scope="props">
                         <b-table-column field="#" label="#" width="40" numeric centered>
