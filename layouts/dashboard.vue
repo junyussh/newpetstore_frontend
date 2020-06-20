@@ -17,7 +17,7 @@
                         <b-icon icon='lightbulb' /> Mall
                     </nuxt-link>
                 </li>
-                <li v-if="info.role == 'SELLER'">
+                <li>
                     <nuxt-link to='/dashboard/supplier' exact-active-class="is-active">
                         <b-icon icon='store' /> Supplier
                     </nuxt-link>

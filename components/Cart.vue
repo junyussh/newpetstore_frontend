@@ -11,7 +11,7 @@
                 </div>
         </div>-->
         <div class="card-content">
-          <b-table :data="item">
+          <b-table :data="cart">
             <template slot-scope="props">
               <b-table-column field="#" label="#" width="40" numeric centered>{{ props.index+1 }}</b-table-column>
 

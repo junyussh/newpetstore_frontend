@@ -4,7 +4,6 @@
             <div class="hero-body">
                 <div class="container">
                     <nav class="level">
-                        <!-- Left side -->
                         <div class="level-left">
                             <div class="level-item">
                                 <b-button size="is-medium" @click="$router.go(-1)">
@@ -16,8 +15,6 @@
                                 </b-button>
                             </div>
                         </div>
-
-                        <!-- Right side -->
                     </nav>
                     <div class="columns">
                         <div class="column is-two-fifths">
@@ -187,6 +184,7 @@ export default {
         addShoppingCart() {
             if (this.selected) {
                 this.Cart = {
+                    itemId: this.Item[this.selected.index].id,
                     productID: this.Product.id,
                     productName: this.Product.name,
                     attribute: this.Item[this.selected.index].attribute,
@@ -197,7 +195,6 @@ export default {
                     stock: this.Item[this.selected.index].quantity,
                     check: true
                 };
-                console.log(this.Cart);
                 // 判断是否登录
                 if (!this.$store.state.Login.signed) {
                     this.$buefy.notification.open({
@@ -212,6 +209,7 @@ export default {
                     return;
                 } else {
                     this.addCart(this.Cart);
+                    console.log(this.$store.state.Cart.Cart)
                     this.$buefy.notification.open({
                         duration: 3000,
                         message: `Add success`,

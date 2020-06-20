@@ -36,6 +36,11 @@
           </div>
           <div class="field">
             <p class="control">
+              <div class="g-recaptcha" data-sitekey="6LezCeYUAAAAAGFHT6vloDsIiC4IgAIiTjEPIpCy"></div>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
               <button
                 class="button is-success"
                 style="margin-left:43%;"
@@ -52,6 +57,7 @@
       <div class="hero-foot"></div>
     </section>
   </div>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </div>
 </template>
 <script>
