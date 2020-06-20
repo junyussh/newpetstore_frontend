@@ -26,6 +26,7 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
+                    <b>Supplier</b>
                     <h1 class="title">{{ this.supplier.name }}</h1>
                     <h2 class="subtitle">
                         {{ supplier.city }}{{supplier.city? ", " + supplier.state: supplier.state}}

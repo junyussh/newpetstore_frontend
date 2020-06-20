@@ -21,19 +21,23 @@
     <section class="hero">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">{{ this.product.id }}</h1>
-                <h2 class="subtitle">{{ this.product.description }} {{ this.product.description ? ", "+product.id : product.id}}</h2>
+                <b>Product</b>
+                <h1 class="title">{{ this.product.name }}</h1>
+                <h2 class="subtitle">{{ this.product.description }}
+                    <br>
+                    <i>{{ product.id }}</i>
+                </h2>
             </div>
         </div>
     </section>
     <div class="columns">
         <div class="column">
             <div class="columns">
-                <SellerItemCard v-for="(item, index) in items" :key="index" :id="item.id" :attribute="product.attribute" :productId="product.productId" :supplierId="product.supplierId" />
+                <SellerItemCard @reload="reloadItems" v-for="(item, index) in items" :key="index" :id="item.id" :attribute="item.attribute" :productId="product.id" :supplierId="product.supplierId" :item="item"/>
             </div>
         </div>
         <b-modal :active.sync="isComponentModalActive" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
-            <newItem :product=product @reload="reloadItems"></newItem>
+            <newItem :product="product" @reload="reloadItems"></newItem>
         </b-modal>
     </div>
 </section>
@@ -49,6 +53,9 @@ export default {
         ItemCard,
         SellerItemCard,
         newItem
+    },
+    head: {
+        title: "Product Manage"
     },
     data() {
         return {

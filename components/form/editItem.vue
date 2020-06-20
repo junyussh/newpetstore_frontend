@@ -2,10 +2,17 @@
     <form action @submit.prevent>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Create new Item</p>
+                <p class="modal-card-title">Edit product</p>
             </header>
             <section class="modal-card-body">
-                
+                <b-field label="Attribute">
+                    <b-input
+                        v-model="form.attribute"
+                        placeholder="Attribute"
+                        maxlength="30"
+                        required
+                    ></b-input>
+                </b-field>
                 <b-field label="Price">
                     <b-input
                         v-model="form.unitprice"
@@ -32,22 +39,13 @@
                         required
                     ></b-input>
                 </b-field>
-                <b-field label="Attribute">
-                    <b-input
-                        v-model="form.attribute"
-                        placeholder="Attribute"
-                        maxlength="30"
-                        required
-                    ></b-input>
-                </b-field>
-                
             </section>
             <footer class="modal-card-foot" style="justify-content: flex-end;">
                 <button class="button" type="button" @click="close">
                     Cancel
                 </button>
                 <button class="button is-primary" @click="save">
-                    Add
+                    Save
                 </button>
             </footer>
         </div>
@@ -56,10 +54,9 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-    props: ["product"],
+    props: ["newForm"],
     data() {
         return {
-            Category: [],
             form: {}
         };
     },
@@ -69,11 +66,6 @@ export default {
     beforeMount() {
         this.form = Object.assign({}, this.newForm);
     },
-    async mounted() {
-        console.log("check is here");
-        console.log(this.product)
-        // this.Category = await this.getAllCategory();
-    },
     methods: {
         clearForm() {
             Object.keys(this.form).forEach(key => {
@@ -81,17 +73,12 @@ export default {
             });
         },
         save() {
-            this.form.id = 6767;
-            this.form.supplierId = this.product.supplierId;
-            this.form.productId = this.product.id;
-            console.log(this.form);
             this.$axios
-                .$post("/items/", this.form)
+                .$put("/items/"+this.form.id, this.form)
                 .then(res => {
                     if (res.id) {
-                        // this.clearForm();
                         this.$buefy.toast.open({
-                            message: "Item created successfully!",
+                            message: "Item updated successfully!",
                             type: "is-success"
                         });
                         this.$emit("reload")
