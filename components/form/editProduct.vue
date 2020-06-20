@@ -45,7 +45,7 @@
                     Cancel
                 </button>
                 <button class="button is-primary" @click="save">
-                    Add
+                    Save
                 </button>
             </footer>
         </div>

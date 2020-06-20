@@ -3,7 +3,8 @@
     <div class="md-card">
       <div class="md-card-media">
         <div class="md-card-image">
-          <img :src="image" alt="Placeholder image" />
+          <img v-if="image" :src="image" alt="Placeholder image" />
+          <img v-else src="~/assets/placeholder.png" alt="Placeholder image" />
         </div>
         <div class="md-card-media-covered">
           <div class="md-card-primary">

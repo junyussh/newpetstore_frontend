@@ -87,7 +87,7 @@ export default {
         newItem
     },
     head: {
-        title: "Product Manage"
+        title: "Items Manage"
     },
     data() {
         return {

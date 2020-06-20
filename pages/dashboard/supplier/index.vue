@@ -13,7 +13,7 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">Supplier Management</h1>
+                    <h1 class="title">Suppliers Management</h1>
                     <h2 class="subtitle">
                         {{ suppliers.length }} Suppliers
                     </h2>
@@ -63,6 +63,9 @@ export default {
     components: {
         SupplierCard,
         newSupplier
+    },
+    head: {
+        title: "Suppliers Manage"
     },
     data() {
         return {

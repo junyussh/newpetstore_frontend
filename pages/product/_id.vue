@@ -1,295 +1,235 @@
 <template>
-  <div>
-    <div id="details">
-      <!-- 头部 -->
-      <div class="page-header">
-        <div class="title">
-          <p>The ProductID is: {{ Product.id }}</p>
-        </div>
-      </div>
-      <!-- 头部END -->
+    <div>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <nav class="level">
+                        <!-- Left side -->
+                        <div class="level-left">
+                            <div class="level-item">
+                                <b-button size="is-medium" @click="$router.go(-1)">
+                                    <b-icon
+                                        pack="fas"
+                                        icon="chevron-left"
+                                    ></b-icon>
+                                    <span> Back</span>
+                                </b-button>
+                            </div>
+                        </div>
 
-      <!-- 主要内容 -->
-      <div class="container">
-        <div class="main">
-          <div class="block">
-            <img style="height:541px;" :src="Product.image" />
-          </div>
-          <div class="content">
-            <!-- 右侧内容区 -->
-            <h1 class="name">商品名称：{{ Product.name }}</h1>
-            <p class="intro">商品简介：{{ Product.description }}</p>
-            <div class="price">
-              <span>{{ Item[0].unitprice }}元</span>
+                        <!-- Right side -->
+                    </nav>
+                    <div class="columns">
+                        <div class="column is-two-fifths">
+                            <figure class="image is-1by1">
+                                <img
+                                    v-if="Product.image"
+                                    :src="Product.image"
+                                />
+                                <img
+                                    v-else
+                                    src="~/assets/placeholder.png"
+                                />
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <div class="info">
+                                <h1 class="title" style="font-size: 3rem">
+                                    {{ Product.name }}
+                                </h1>
+                                <p class="subtitle">
+                                    {{ Product.description }}
+                                    <br />
+                                    <i>{{ Product.id }}</i>
+                                    <br>
+                                    <i v-if="selected"
+                                        >Available:
+                                        {{ Item[selected.index].quantity }}</i
+                                    >
+                                </p>
+                                <p class="title">
+                                    <b-icon
+                                        pack="fas"
+                                        icon="dollar-sign"
+                                        size="is-medium"
+                                    ></b-icon>
+                                    {{ selected ? selected.price : "NaN" }}
+                                </p>
+                                <section style="width: 30%">
+                                    <b-field label="Select Item">
+                                        <b-select
+                                            placeholder="Chose your setting"
+                                            v-model="selected"
+                                            @onChange="onChange"
+                                            expanded
+                                        >
+                                            <option
+                                                :value="{
+                                                    id: item.id,
+                                                    index: index,
+                                                    price: item.unitprice
+                                                }"
+                                                v-for="(item, index) in Item"
+                                                :key="item.id"
+                                                >{{ item.attribute }}</option
+                                            >
+                                        </b-select>
+                                    </b-field>
+                                    <b-field
+                                        ><!-- Label left empty for spacing -->
+                                        <p class="control">
+                                            <button
+                                                class="button is-info is-fullwidth"
+                                                @click="addShoppingCart"
+                                            >
+                                                <b-icon
+                                                    pack="fas"
+                                                    icon="cart-plus"
+                                                ></b-icon>
+                                                <span>Add to cart</span>
+                                            </button>
+                                        </p>
+                                    </b-field>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="pro-list">
-              <b-select placeholder="select item" v-model="Cart.attribute">
-                <option
-                  :value="item.attribute"
-                  v-for="item in Item"
-                  :key="item"
-                >{{ item.attribute }}</option>
-              </b-select>
-              <span class="pro-name">{{ Product.name }}</span>
-              <p class="price-sum">总计 : {{ Item[0].unitprice }}元</p>
-            </div>
-            <b-button
-              style="width:20%; margin:auto"
-              class="is-info"
-              expanded
-              @click="addShoppingCart"
-            >加入购物车</b-button>
-            <!-- </div> -->
-          </div>
-          <!-- 右侧内容区END -->
-        </div>
-        <!-- 主要内容END -->
-      </div>
+        </section>
     </div>
-  </div>
 </template>
 <script>
 import { mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      Product: {
-        id: "",
-        supplierId: "",
-        categoryId: "",
-        name: "",
-        description: "",
-        image: ""
-      },
-      Item: [
-        {
-          id: "",
-          productId: "",
-          supplierId: "",
-          unitprice: "",
-          unitcost: "",
-          quantity: "",
-          attribute: ""
+    data() {
+        return {
+            selected: null,
+            Supplier: {},
+            Product: {
+                id: "",
+                supplierId: "",
+                categoryId: "",
+                name: "",
+                description: "",
+                image: ""
+            },
+            Item: [
+                {
+                    id: "",
+                    productId: "",
+                    supplierId: "",
+                    unitprice: "",
+                    unitcost: "",
+                    quantity: "",
+                    attribute: ""
+                }
+            ],
+            Cart: {
+                id: "2", // #
+                productID: "345", // 商品id
+                productName: "测试", // 商品名称
+                attribute: "cute",
+                supplierName: "2456", //供货商,
+                supplierId: "12387",
+                price: "12300", // 商品价格
+                amount: "3", // 商品数量
+                stock: "6", // 商品限购数量
+                check: true // 是否勾选
+            }
+        };
+    },
+    async asyncData({ route, params, $axios }) {
+        console.log(route.params.id);
+    },
+    mounted: async function() {
+        await this.getProduct();
+        this.Supplier = await this.getSupplier();
+        await this.getItemByProductId();
+    },
+    methods: {
+        ...mapActions({
+            unshiftCart: "Cart/unshiftCart",
+            addCart: "Cart/addCart"
+        }),
+        onChange(e) {
+            console.log(e.target.key);
+        },
+        getSupplier() {
+            return this.$axios.$get("/suppliers/" + this.Product.supplierId);
+        },
+        getProduct() {
+            let _this = this;
+            return this.$axios
+                .get("/products/" + this.$route.params.id)
+                .then(function(res) {
+                    console.log(res);
+                    _this.Product = res.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
+        getItemByProductId() {
+            let _this = this;
+            return this.$axios
+                .get("/items/all", {
+                    params: { productId: this.$route.params.id }
+                })
+                .then(function(res) {
+                    console.log(res);
+                    _this.Item = res.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
+        addShoppingCart() {
+            if (this.selected) {
+                this.Cart = {
+                    productID: this.Product.id,
+                    productName: this.Product.name,
+                    attribute: this.Item[this.selected.index].attribute,
+                    supplierName: this.Supplier.name,
+                    supplierId: this.Supplier.id,
+                    price: this.selected.price,
+                    amount: 1,
+                    stock: this.Item[this.selected.index].quantity,
+                    check: true
+                };
+                console.log(this.Cart);
+                // 判断是否登录
+                if (!this.$store.state.Login.signed) {
+                    this.$buefy.notification.open({
+                        duration: 3000,
+                        message: `Please login first.`,
+                        position: "is-bottom-right",
+                        type: "is-danger",
+                        hasIcon: true
+                    });
+
+                    this.$router.push("/login");
+                    return;
+                } else {
+                    this.addCart(this.Cart);
+                    this.$buefy.notification.open({
+                        duration: 3000,
+                        message: `Add success`,
+                        position: "is-bottom-right",
+                        type: "is-success",
+                        hasIcon: true
+                    });
+                }
+            } else {
+                this.$buefy.notification.open({
+                    duration: 3000,
+                    message: `Please select a item to add to cart`,
+                    position: "is-bottom-right",
+                    type: "is-danger",
+                    hasIcon: true
+                });
+            }
         }
-      ],
-      Cart: {
-        id: "2", // #
-        productID: "345", // 商品id
-        productName: "测试", // 商品名称
-        attribute: "cute",
-        supplierName: "2456", //供货商,
-        supplierId: "12387",
-        price: "12300", // 商品价格
-        amount: "3", // 商品数量
-        stock: "6", // 商品限购数量
-        check: true // 是否勾选
-      }
-    };
-  },
-  async asyncData({ route, params, $axios }) {
-    console.log(route.params.id);
-  },
-  mounted: async function() {
-    this.getProduct();
-    this.getItemByProductId();
-  },
-  methods: {
-    ...mapActions({
-      unshiftCart: "Cart/unshiftCart",
-      addCart: "Cart/addCart"
-    }),
-    async getProduct() {
-      let _this = this;
-      console.log("productid is " + this.$route.params.id);
-      this.$axios
-        .get("products/" + this.$route.params.id)
-        .then(function(res) {
-          console.log(res);
-          _this.Product = res.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    async getItemByProductId() {
-      let _this = this;
-      this.$axios
-        .get("items/all", {
-          params: { productId: this.$route.params.id }
-        })
-        .then(function(res) {
-          console.log(res);
-          _this.Item = res.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    addShoppingCart() {
-      console.log("into addShoppingCart");
-      // 判断是否登录
-      if (!this.$store.state.Login.info) {
-        this.$buefy.toast.open({
-          duration: 3000,
-          message: "Please Login First.",
-          position: "is-bottom",
-          type: "is-success"
-        });
-        this.$router.push("/login");
-        return;
-      }
-      // 新加入购物车成功
-      this.addCart(this.Cart);
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: "Add success.",
-        position: "is-bottom",
-        type: "is-success"
-      });
     }
-  }
 };
 </script>
-<style>
-/* 头部CSS */
-#details .page-header {
-  height: 64px;
-  margin-top: -20px;
-  z-index: 4;
-  background: #fff;
-  border-bottom: 1px solid #e0e0e0;
-  -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.07);
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.07);
-}
-#details .page-header .title {
-  width: 1225px;
-  height: 64px;
-  line-height: 64px;
-  font-size: 18px;
-  font-weight: 400;
-  color: #212121;
-  margin: 0 auto;
-}
-#details .page-header .title p {
-  float: left;
-}
-#details .page-header .title .list {
-  height: 64px;
-  float: right;
-}
-#details .page-header .title .list li {
-  float: left;
-  margin-left: 20px;
-}
-#details .page-header .title .list li a {
-  font-size: 14px;
-  color: #616161;
-}
-#details .page-header .title .list li a:hover {
-  font-size: 14px;
-  color: #ff6700;
-}
-/* 头部CSS END */
-/* 主要内容CSS */
-#details .main {
-  width: 1225px;
-  height: 560px;
-  padding-top: 30px;
-  margin: 0 auto;
-}
-#details .main .block {
-  float: left;
-  width: 541px;
-  height: 541px;
-}
-#details .el-carousel .el-carousel__indicator .el-carousel__button {
-  background-color: rgba(163, 163, 163, 0.8);
-}
-#details .main .content {
-  float: left;
-  margin-left: 25px;
-  width: 640px;
-}
-#details .main .content .name {
-  height: 30px;
-  line-height: 30px;
-  font-size: 24px;
-  font-weight: normal;
-  color: #212121;
-}
-#details .main .content .intro {
-  color: #b0b0b0;
-  padding-top: 10px;
-}
-#details .main .content .store {
-  color: #ff6700;
-  padding-top: 10px;
-}
-#details .main .content .price {
-  display: block;
-  font-size: 18px;
-  color: #ff6700;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 25px 0 25px;
-}
-#details .main .content .price .del {
-  font-size: 14px;
-  margin-left: 10px;
-  color: #b0b0b0;
-  text-decoration: line-through;
-}
-#details .main .content .pro-list {
-  background: #f9f9fa;
-  padding: 30px 60px;
-  margin: 50px 0 50px;
-}
-#details .main .content .pro-list span {
-  line-height: 30px;
-  color: #616161;
-}
-#details .main .content .pro-list .pro-price {
-  float: right;
-}
-#details .main .content .pro-list .pro-price .pro-del {
-  margin-left: 10px;
-  text-decoration: line-through;
-}
-#details .main .content .pro-list .price-sum {
-  color: #ff6700;
-  font-size: 24px;
-  padding-top: 20px;
-}
-#details .main .content .button {
-  height: 55px;
-  margin: 10px 0 20px 0;
-}
-#details .main .content .button .el-button {
-  float: left;
-  height: 55px;
-  font-size: 16px;
-  color: #fff;
-  border: none;
-  text-align: center;
-}
-#details .main .content .button .shop-cart {
-  width: 340px;
-  background-color: #ff6700;
-}
-#details .main .content .button .shop-cart:hover {
-  background-color: #f25807;
-}
-#details .main .content .button .like {
-  width: 260px;
-  margin-left: 40px;
-  background-color: #b0b0b0;
-}
-#details .main .content .button .like:hover {
-  background-color: #757575;
-}
-#details .main .content .pro-policy li {
-  float: left;
-  margin-right: 20px;
-  color: #b0b0b0;
-}
-/* 主要内容CSS END */
-</style>

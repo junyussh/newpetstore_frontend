@@ -99,7 +99,7 @@ export default {
         newProduct
     },
     head: {
-        title: "Supplier Manage"
+        title: "Products Manage"
     },
     data() {
         return {
