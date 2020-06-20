@@ -9,27 +9,32 @@
             <ul class="menu-list">
                 <li>
                     <nuxt-link to='/dashboard/' exact-active-class="is-active">
-                        <b-icon icon='home' />Home
+                        <b-icon icon='home' /> Home
                     </nuxt-link>
                 </li>
                 <li v-if="info.role == 'USER'">
                     <nuxt-link to='/dashboard/mall' exact-active-class="is-active">
-                        <b-icon icon='lightbulb' />Mall
+                        <b-icon icon='lightbulb' /> Mall
                     </nuxt-link>
                 </li>
                 <li v-if="info.role == 'SELLER'">
                     <nuxt-link to='/dashboard/supplier' exact-active-class="is-active">
-                        <b-icon icon='store' />Supplier
+                        <b-icon icon='store' /> Supplier
                     </nuxt-link>
                 </li>
                 <li v-if="info.role == 'ADMIN'">
                     <nuxt-link to='/dashboard/manage' exact-active-class="is-active">
-                        <b-icon icon='store' />Manage
+                        <b-icon icon='store' /> Manage
+                    </nuxt-link>
+                </li>
+                <li v-if="info.role == 'SELLER' || info.role == 'USER'">
+                    <nuxt-link to='/dashboard/orders' exact-active-class="is-active">
+                        <b-icon icon='ticket-alt'/> Order
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link to='/dashboard/setting' exact-active-class="is-active">
-                        <b-icon icon='cogs' />Setting
+                        <b-icon icon='cogs' /> Setting
                     </nuxt-link>
                 </li>
             </ul>
@@ -62,8 +67,8 @@ export default {
     }),
     async mounted() {
         // var userinfo = localStorage.getItem('userinfo'),
-        this.userinfo = this.$store.state.Login.info,
-            console.log('test in dashboard ' + this.$data.userinfo)
+        this.userinfo = this.$store.state.Login.info
+        console.log('test in dashboard ' + this.$data.userinfo)
         console.log(this.info)
     }
 }

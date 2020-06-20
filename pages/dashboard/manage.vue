@@ -19,9 +19,9 @@
                     {{ props.row.username }}
                 </b-table-column>
 
-                <b-table-column field="password" label="password" centered>
+                <!-- <b-table-column field="password" label="password" centered>
                     {{ props.row.password }}
-                </b-table-column>
+                </b-table-column> -->
 
                 <b-table-column field="email" label="email" centered>
                     {{ props.row.email }}
@@ -117,14 +117,14 @@ export default {
         };
     },
     async mounted() {
-        // if (this.error) {
-        //     this.$buefy.toast.open({
-        //         message: "something get errors",
-        //         type: "is-danger"
-        //     });
-        // } else {
-        //     this.accountList = await this.$axios.$get("/users/all");
-        // }
+        if (this.error) {
+            this.$buefy.toast.open({
+                message: "something get errors",
+                type: "is-danger"
+            });
+        } else {
+            this.accountList = await this.$axios.$get("/users/");
+        }
         // this.accountList = await this.$axios.$get("/users/all");
     },
 }

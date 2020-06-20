@@ -346,7 +346,7 @@ export default {
       console.log(this.form);
       this.$axios.$post("/register", this.form).then(res => {
         if (res.id) {
-          this.clearForm();
+          // this.clearForm();
           this.success("You've been our member, redirecting to login page");
           this.$router.push("/login");
         }

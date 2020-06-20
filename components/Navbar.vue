@@ -49,19 +49,21 @@
                         aria-role="menuitem"
                     >
                         <nuxt-link tag="div" :to="{ path: '/dashboard'}">
-                            <b-icon pack="fas" icon="tachometer-alt"></b-icon>Dashboard
+                            <b-icon pack="fas" icon="tachometer-alt"></b-icon> Dashboard
                         </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="supplier" aria-role="menuitem">
                         <nuxt-link tag="div" :to="{ path: '/dashboard/supplier'}">
-                            <b-icon pack="fas" icon="store"></b-icon>Suppliers
+                            <b-icon pack="fas" icon="store"></b-icon> Suppliers
                         </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="orders" aria-role="menuitem">
-                        <b-icon pack="fas" icon="ticket-alt"></b-icon>Orders
+                        <nuxt-link tag="div" :to="{ path: '/dashboard/orders'}">
+                            <b-icon pack="fas" icon="ticket-alt"></b-icon> Orders
+                        </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="cart" aria-role="menuitem">
-                        <b-icon pack="fas" icon="shopping-cart"></b-icon>Cart
+                        <b-icon pack="fas" icon="shopping-cart"></b-icon> Cart
                     </b-dropdown-item>
                     <hr class="dropdown-divider" aria-role="menuitem" />
                     <b-dropdown-item value="settings">
