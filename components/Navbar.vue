@@ -63,7 +63,9 @@
                         </nuxt-link>
                     </b-dropdown-item>
                     <b-dropdown-item value="cart" aria-role="menuitem">
-                        <b-icon pack="fas" icon="shopping-cart"></b-icon> Cart
+                        <nuxt-link tag="div" :to="{ path: '/cart'}">
+                            <b-icon pack="fas" icon="shopping-cart"></b-icon> Cart
+                        </nuxt-link>
                     </b-dropdown-item>
                     <hr class="dropdown-divider" aria-role="menuitem" />
                     <b-dropdown-item value="settings">
