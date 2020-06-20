@@ -5,7 +5,14 @@
                 <p class="modal-card-title">Create new Item</p>
             </header>
             <section class="modal-card-body">
-                
+                <b-field label="Attribute">
+                    <b-input
+                        v-model="form.attribute"
+                        placeholder="Attribute"
+                        maxlength="30"
+                        required
+                    ></b-input>
+                </b-field>
                 <b-field label="Price">
                     <b-input
                         v-model="form.unitprice"
@@ -31,16 +38,7 @@
                         type="number"
                         required
                     ></b-input>
-                </b-field>
-                <b-field label="Attribute">
-                    <b-input
-                        v-model="form.attribute"
-                        placeholder="Attribute"
-                        maxlength="30"
-                        required
-                    ></b-input>
-                </b-field>
-                
+                </b-field>                
             </section>
             <footer class="modal-card-foot" style="justify-content: flex-end;">
                 <button class="button" type="button" @click="close">

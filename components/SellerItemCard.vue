@@ -4,7 +4,7 @@
             <div class="card-content">
                 <p class="title">{{ attribute }}</p>
                 <p class="subtitle">
-                    <i>{{ productId }}</i>
+                    <i>{{ id }}</i>
                 </p>
                 <p>
                     <b-icon pack="fas" icon="tag" size="is-small"></b-icon>
@@ -28,7 +28,7 @@
                         >Edit
                     </span>
                 </p>
-                <p class="card-footer-item" @click="deleteItem">
+                <p class="card-footer-item" @click="deleteItemDialog">
                     <span>
                         <a class="is-danger">
                             <b-icon
@@ -71,7 +71,7 @@ export default {
         }
     },
     methods: {
-        deleteItem() {
+        deleteItemDialog() {
             this.$buefy.dialog.confirm({
                 title: "Deleting supplier",
                 message:
@@ -79,8 +79,25 @@ export default {
                 confirmText: "Delete Item",
                 type: "is-danger",
                 hasIcon: true,
-                onConfirm: () => this.$buefy.toast.open("Account deleted!")
+                onConfirm: () => this.deleteItem()
             });
+        },
+        deleteItem() {
+            let _this = this;
+            this.$axios.$delete("/items/"+this.id).then(res => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Item "+this.name+" deleted!",
+                        type: "is-success"
+                    });
+                _this.reloadItem();
+            }).catch(e => {
+                this.$buefy.toast.open({
+                        duration: 2000,
+                        message: "Something got error!",
+                        type: "is-danger"
+                    });
+            })
         },
         reloadItem() {
             this.isComponentModalActive = false;
