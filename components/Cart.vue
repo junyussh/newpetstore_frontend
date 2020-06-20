@@ -58,15 +58,6 @@
             </template>
           </b-table>
         </div>
-        <div class="pro-num">
-                <el-input-number
-                  size="small"
-                  :value= 1
-                  @change="handleChange($event,index,item.productID)"
-                  :min="1"
-                  :max= 3
-                ></el-input-number>
-              </div>
         <footer class="card-footer">
           <b-button type="is-success" @click="check">Checkout</b-button>
         </footer>
