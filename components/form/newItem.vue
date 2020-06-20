@@ -14,8 +14,8 @@
                 </b-field>
                 <b-field label="unitcost">
                     <b-input
-                        v-model="form.unitprice"
-                        placeholder="unitprice"
+                        v-model="form.unitcost"
+                        placeholder="unitcost"
                     ></b-input>
                 </b-field>
                 <b-field label="quantity">
