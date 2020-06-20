@@ -47,6 +47,7 @@
                 <b-table-column field="delete" label="delete" centered>
                     <b-button type="is-danger" pack="fas" icon-right="minus" size="is-small" @click="remove(props.row.id)">delete</b-button>
                 </b-table-column>
+                <button @click="changeState">{{ orderstate }}</button>
 
             </template>
 
@@ -75,7 +76,8 @@ export default {
     layout: "dashboard",
     data() {
         return {
-            orders: []
+            orders: [],
+            orderstate: "未发货"
         };
     },
     computed: mapState({
@@ -109,6 +111,9 @@ export default {
     methods:{
         remove(id){
             // this.$axios.$delete("/orders")
+        },
+        changeState() {
+            this.orderstate = "已发货"
         }
     }
 }
