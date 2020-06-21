@@ -75,14 +75,14 @@
                             <b-button
                                 v-if="props.row.status === 'Pending'"
                                 type="is-success"
-                                @click="toActive(props.row.id)"
+                                @click="toActiveDialog(props.row.id)"
                                 @reload="reloadOrders"
                                 >Active</b-button
                             >
                             <b-button
                                 v-if="props.row.status === 'Pending'"
                                 type="is-danger"
-                                @click="toCancel(props.row.id)"
+                                @click="toCancelDialog(props.row.id)"
                                 @reload="reloadOrders"
                                 >Cancel</b-button
                             >
@@ -184,6 +184,26 @@ export default {
                 }
             }
             return orders;
+        },
+        toActiveDialog(id) {
+            this.$buefy.dialog.confirm({
+                    title: 'Changing Status',
+                    message: 'Are you sure you want to change this order\'s status to <b>Active</b>? This action cannot be undone.',
+                    confirmText: 'Change status',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    onConfirm: () => this.toActive(id)
+                })
+        },
+        toCancelDialog(id) {
+            this.$buefy.dialog.confirm({
+                    title: 'Changing Status',
+                    message: 'Are you sure you want to change this order\'s status to <b>Cancel</b>? This action cannot be undone.',
+                    confirmText: 'Change status',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    onConfirm: () => this.toCancel(id)
+                })
         },
         toActive(id) {
             this.isLoading = true;
