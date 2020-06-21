@@ -7,7 +7,6 @@
                     {{ props.index+1 }}
                 </b-table-column>
 
-
                 <b-table-column field="id" label="id" centered>
                     {{ props.row.id }}
                 </b-table-column>
@@ -45,7 +44,7 @@
                 </b-table-column> -->
 
                 <b-table-column field="delete" label="delete" centered>
-                    <b-button type="is-danger" pack="fas" icon-right="minus" size="is-small" @click="remove(props.row.id)">delete</b-button>
+                    <b-button type="is-success" pack="fas"  size="is-small" @click="changeState(props.row.id)" @reload="reloadOrders">发货</b-button>
                 </b-table-column>
 
             </template>
@@ -75,7 +74,8 @@ export default {
     layout: "dashboard",
     data() {
         return {
-            orders: []
+            orders: [],
+            orderstate: "未发货"
         };
     },
     computed: mapState({
@@ -90,25 +90,52 @@ export default {
         } else {
             if (this.info.role === "USER") {
                 this.orders = await this.$axios.$get("/orders/");
-            } else if (this.info.role === "SELLER"){
+            } else if (this.info.role === "SELLER") {
                 // 获取SELLER的所有商铺
                 let suppliers = await this.$axios.$get("/suppliers/");
-                for(let supplier of suppliers){
-                    let tempOrders = await this.$axios.$get("/orders/all/",{
-                        params:{
-                            supplierId: supplier.id
+                for (let supplier of suppliers) {
+                    let tempOrders = await this.$axios.$get("/orders/all/", {
+                        params: {
+                            supplierId: supplier.id,
+                            status: "Pending"
                         }
                     });
-                    for(let order of tempOrders){
+                    for (let order of tempOrders) {
                         this.orders.push(order)
                     }
                 }
             }
         }
     },
-    methods:{
-        remove(id){
+    methods: {
+        remove(id) {
             // this.$axios.$delete("/orders")
+        },
+        getPendingOrder() {
+            let orders
+            let suppliers = this.$axios.$get("/suppliers/");
+            for (let supplier of suppliers) {
+                let tempOrders = this.$axios.$get("/orders/all/", {
+                    params: {
+                        supplierId: supplier.id,
+                    }
+                });
+                for (let order of tempOrders) {
+                    if (order.status = "Pending") {
+                        orders.push(order)
+                    }
+                }
+            }
+            return orders
+        },
+        changeState(id) {
+            this.$axios.$patch("/orders/" + id, {
+                status: "Active"
+            })
+        },
+        async reloadOrders() {
+            console.log("is changing")
+            this.orders = this.getPendingOrder()
         }
     }
 }

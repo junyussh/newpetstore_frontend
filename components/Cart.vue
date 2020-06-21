@@ -62,9 +62,6 @@
             </template>
           </b-table>
         </div>
-        <footer class="card-footer">
-          <b-button type="is-success" @click="check">Checkout</b-button>
-        </footer>
       </div>
     </div>
     <p></p>
@@ -106,27 +103,6 @@ export default {
     ...mapGetters({
       getSum: "Cart/getTotalPrice"
     }),
-    check() {
-      console.log(this.getSum());
-      this.$buefy.dialog.prompt({
-        message: `身份验证`,
-        inputAttrs: {
-          placeholder: "请输入用户名以提交订单",
-          maxlength: 20
-        },
-        trapFocus: true,
-        onConfirm: value => {
-          if (value == "crf") {
-            this.$buefy.toast.open(`验证成功，订单已提交`);
-            /**
-             * 提交成功 1、处理订单 2、跳转界面 3、清楚该购物车内的data列表
-             */
-          } else {
-            this.$buefy.toast.open(`验证失败，请重新验证`);
-          }
-        }
-      });
-    },
     minus(index) {
       if (this.cart[index].amount - 1 > 0) {
         this.minusItem(index);
