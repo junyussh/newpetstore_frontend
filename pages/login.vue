@@ -2,7 +2,7 @@
   <div class="container" style="background-image: url(https://source.unsplash.com/1344x732/?animal?cute);">
   <div  style="margin:0 auto;border-style:outset;width:33%;background-color:rgba(255, 255, 255, 0.5);">
     <section class="hero is-large" style="height:540px">
-      <h1 class="title" style="margin:auto">Loging Now</h1>
+      <h1 class="title" style="margin:auto">Login Now</h1>
       <div class="hero-body" style="margin:0 auto; margin-top:-22%;">
         <div class="container">
           <div class="field">

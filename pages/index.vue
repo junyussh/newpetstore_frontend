@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-fullheight-with-navbar is-black">
+  <section class="hero is-fullheight-with-navbar">
     <div class="hero-head">
       <!-- <nav class="navbar">
         <div class="container"> -->
@@ -41,17 +41,15 @@
           <div class="column">
             <h1 class="title is-size-1">
               Novel Petstore
-              <br />is coming up!
+              <br />is coming!
             </h1>
-            <p>JPetstore UI will be updated.</p>
+            <p>JPetstore UI has been updated.</p>
             <div class="buttons" style="margin-top: 1em">
-              <a class="button is-link is-medium">
-                <nuxt-link to="/login">Get Started</nuxt-link>
-              </a>
+                <nuxt-link to="/login" class="button is-link is-medium">Get Started</nuxt-link>
             </div>
           </div>
           <div class="column">
-            <span  style="font: 700 100px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;">Welcome JPetstore</span>
+            <!-- <span  style="font: 700 100px Comic Sans MS;color: white;text-shadow: 0 0 20px #fdec84,10px -10px 30px #ffae35,20px -20px 40px #ec760c,-20px -60px 50px #cd4607,0px -80px 60px #973717,10px -40px 70px #451b0e;">Welcome JPetstore</span> -->
             <!-- <img src="~/assets/buefy.png" width="500" height="500" alt srcset /> -->
           </div>
         </div>
