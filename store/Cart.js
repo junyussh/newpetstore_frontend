@@ -103,6 +103,12 @@ export default {
     },
     plusItem(state, index) {
       state.Cart[index].amount++;
+    },
+    removeItem(state, index) {
+      state.Cart.slice(index, 1);
+    },
+    clearCart(state) {
+      state.Cart = []
     }
   },
   actions: {
@@ -115,6 +121,12 @@ export default {
       commit
     }, data) {
       commit('addCart', data);
+    },
+    removeCart({commit}, index) {
+      commit("removeItem", index);
+    },
+    clearCart({commit}) {
+      commit("clearCart");
     },
     updateCart({
       commit

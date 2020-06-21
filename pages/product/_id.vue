@@ -6,7 +6,10 @@
                     <nav class="level">
                         <div class="level-left">
                             <div class="level-item">
-                                <b-button size="is-medium" @click="$router.go(-1)">
+                                <b-button
+                                    size="is-medium"
+                                    @click="$router.go(-1)"
+                                >
                                     <b-icon
                                         pack="fas"
                                         icon="chevron-left"
@@ -23,22 +26,24 @@
                                     v-if="Product.image"
                                     :src="Product.image"
                                 />
-                                <img
-                                    v-else
-                                    src="~/assets/placeholder.png"
-                                />
+                                <img v-else src="~/assets/placeholder.png" />
                             </figure>
                         </div>
                         <div class="column">
                             <div class="info">
                                 <h1 class="title" style="font-size: 3rem">
                                     {{ Product.name }}
+                                    <br />
+                                    <span class="tag is-success">{{
+                                        Category.name
+                                    }}</span>
                                 </h1>
+
                                 <p class="subtitle">
                                     {{ Product.description }}
                                     <br />
                                     <i>{{ Product.id }}</i>
-                                    <br>
+                                    <br />
                                     <i v-if="selected"
                                         >Available:
                                         {{ Item[selected.index].quantity }}</i
@@ -133,7 +138,8 @@ export default {
                 amount: "3", // 商品数量
                 stock: "6", // 商品限购数量
                 check: true // 是否勾选
-            }
+            },
+            Category: {}
         };
     },
     async asyncData({ route, params, $axios }) {
@@ -142,6 +148,7 @@ export default {
     mounted: async function() {
         await this.getProduct();
         this.Supplier = await this.getSupplier();
+        this.Category = await this.getCategory();
         await this.getItemByProductId();
     },
     methods: {
@@ -154,6 +161,9 @@ export default {
         },
         getSupplier() {
             return this.$axios.$get("/suppliers/" + this.Product.supplierId);
+        },
+        getCategory() {
+            return this.$axios.$get("/categories/" + this.Product.categoryId);
         },
         getProduct() {
             let _this = this;
@@ -208,15 +218,25 @@ export default {
                     this.$router.push("/login");
                     return;
                 } else {
-                    this.addCart(this.Cart);
-                    console.log(this.$store.state.Cart.Cart)
-                    this.$buefy.notification.open({
-                        duration: 3000,
-                        message: `Add success`,
-                        position: "is-bottom-right",
-                        type: "is-success",
-                        hasIcon: true
-                    });
+                    if (this.Cart.stock == 0) {
+                        this.$buefy.notification.open({
+                            duration: 3000,
+                            message: `This item is out of stock.`,
+                            position: "is-bottom-right",
+                            type: "is-danger",
+                            hasIcon: true
+                        });
+                    } else {
+                        this.addCart(this.Cart);
+                        console.log(this.$store.state.Cart.Cart);
+                        this.$buefy.notification.open({
+                            duration: 3000,
+                            message: `Add success`,
+                            position: "is-bottom-right",
+                            type: "is-success",
+                            hasIcon: true
+                        });
+                    }
                 }
             } else {
                 this.$buefy.notification.open({

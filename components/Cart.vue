@@ -48,6 +48,15 @@
                   @click="add(props.index)"
                 />
               </b-table-column>
+              <b-table-column field="Remove" label="Remove" centered>
+                <b-button
+                  type="is-info"
+                  pack="fas"
+                  icon-right="trash-alt"
+                  size="is-small"
+                  @click="remove(props.index)"
+                />
+              </b-table-column>
             </template>
 
             <template slot="empty">
@@ -98,7 +107,8 @@ export default {
   methods: {
     ...mapMutations({
       minusItem: "Cart/minusItem",
-      plusItem: "Cart/plusItem"
+      plusItem: "Cart/plusItem",
+      removeitem: "Cart/removeItem"
     }),
     ...mapGetters({
       getSum: "Cart/getTotalPrice"
@@ -117,6 +127,9 @@ export default {
           type: "is-danger"
         });
       }
+    },
+    remove(index) {
+      this.removeitem(index);
     }
   }
 };
