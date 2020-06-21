@@ -340,19 +340,44 @@
 
 <script>
 import Cart from "@/components/Cart";
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
       labelPosition: "bottom",
       position: null,
       size: null,
-      form: {}
+      form: {
+        itemId: "",
+        quantity: "",
+        shipCountry: "",
+        shipCity: "",
+        shipZip: "",
+        billtofirstname: "",
+        phone: "",
+        shipAddr1: "",
+        status: "",
+        cardType: "",
+        shipAddr2: "",
+        creditCard: "",
+      }
     };
   },
   components: {
     Cart
   },
+  computed: mapState({
+    cart: state => state.Cart.Cart
+  }),
+  mounted: async function() {
+    this.form.itemId = this.cart.itemId;
+    this.form.quantity = this.cart.num;
+  },
   methods: {
+    ...mapMutations({
+      minusItem: "Cart/minusItem",
+      plusItem: "Cart/plusItem"
+    }),
     success(message) {
       this.$buefy.toast.open({
         duration: 3000,
@@ -388,14 +413,29 @@ export default {
             /**
              * 提交成功 1、处理订单 2、跳转界面 3、清楚该购物车内的data列表
              */
+            console.log(this.form);
+            // 初始化order
+            this.form.status = "pending";
+            let _this = this;
+            this.$axios
+              .$post("/orders/", _this.form)
+              .then(res => {
+                if (res.id) {
+                  _this.clearForm();
+                  this.success(
+                    _this.$buefy.toast.open(`成功下单！`)
+                  );
+                  // _this.$router.push("/login");
+                }
+              })
+              .catch(e => {
+                this.danger(e);
+              });
           } else {
             this.$buefy.toast.open(`验证失败，请重新验证`);
           }
         }
       });
-      console.log(this.form);
-      // 初始化order
-      this.form.status = "pending";
     }
   }
 };
